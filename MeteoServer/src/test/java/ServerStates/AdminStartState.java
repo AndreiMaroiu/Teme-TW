@@ -1,9 +1,9 @@
-package StateMachine;
+package ServerStates;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 
-public class AdminStartState extends State
+public final class AdminStartState extends State
 {
     public AdminStartState(StateMachine stateMachine)
     {
@@ -13,7 +13,8 @@ public class AdminStartState extends State
     @Override
     public void begin()
     {
-        stateMachine.getWriter().println("What do you want to do? (Update city weather or update cities file)");
+        stateMachine.getWriter().println("What do you want to do? " +
+                "(Update city weather or update cities file or view cities)");
     }
 
     @Override
@@ -24,11 +25,16 @@ public class AdminStartState extends State
             String line = reader.readLine();
 
             // todo: handle data
+
+            if (line.equals("view"))
+            {
+
+            }
         }
         catch (IOException e)
         {
-            System.out.println(e.getMessage());
-            e.printStackTrace();
+            System.out.println(e.getMessage() + " - thread is closing");
+            stateMachine.close();
         }
     }
 }

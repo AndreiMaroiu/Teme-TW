@@ -1,11 +1,13 @@
+import ServerStates.*;
+
 import java.io.*;
 import java.net.Socket;
 import java.net.SocketException;
 
 public class ClientThread extends Thread
 {
+    private final Server server;
     private Socket socket;
-    private Server server;
     private PrintWriter writer;
     private BufferedReader reader;
 
@@ -23,25 +25,13 @@ public class ClientThread extends Thread
             reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             writer = new PrintWriter(socket.getOutputStream(), true);
 
-            String userType = getUserType();
-            System.out.println("new " + userType + " has logged in.");
-            String clientMessage;
+            StateMachine stateMachine = new StateMachine(writer);
+            stateMachine.setState(new StartState(stateMachine));
 
             do
             {
-                clientMessage = reader.readLine();
-                // TODO handle data
-
-                if(userType.equals("admin"))
-                {
-                    handleAdminInput(clientMessage);
-                }
-                else if(userType.equals("user"))
-                {
-                    handleUserInput(clientMessage);
-                }
-
-            } while (!clientMessage.equals("close"));
+                stateMachine.getState().readData(reader);
+            } while (!stateMachine.canClose());
 
             // TODO server remove user if necessary
             socket.close();
@@ -49,6 +39,7 @@ public class ClientThread extends Thread
         catch(SocketException ex)
         {
             System.out.println("Lost connection to user");
+            ex.printStackTrace();
         }
         catch (IOException ex)
         {
@@ -62,41 +53,10 @@ public class ClientThread extends Thread
         }
     }
 
-    private String getUserType() throws IOException
-    {
-        String userType;
-
-        while(true)
-        {
-            userType = reader.readLine();
-
-            if (userType.equals("admin") || userType.equals("user"))
-            {
-                break;
-            }
-            else
-            {
-                sendMessage("Try to log as a user or admin");
-            }
-        }
-
-        return userType;
-    }
-
-    private void handleUserInput(String input)
-    {
-
-    }
-
-    private void handleAdminInput(String input)
-    {
-
-    }
-
     /**
      * Sends a message to the client.
      */
-    void sendMessage(String message)
+    public void sendMessage(String message)
     {
         writer.println(message);
     }

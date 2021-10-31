@@ -1,4 +1,4 @@
-package StateMachine;
+package ServerStates;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -27,15 +27,11 @@ public final class StartState extends State
 
             if (userType.equals("admin"))
             {
-                //stateMachine.setState(new AdminStartState(stateMachine));
+                stateMachine.setState(new AdminStartState(stateMachine));
             }
             else if (userType.equals("user"))
             {
-                //stateMachine.setState(new UserStartState(stateMachine));
-            }
-            else
-            {
-                stateMachine.setState(new StartState(stateMachine));
+                stateMachine.setState(new UserStartState(stateMachine));
             }
         }
         catch (IOException e)
@@ -55,6 +51,7 @@ public final class StartState extends State
 
             if (userType.equals("admin") || userType.equals("user"))
             {
+                System.out.println(userType + " Connected");
                 break;
             }
             else

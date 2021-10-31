@@ -37,10 +37,6 @@ public class WriteThread extends Thread {
 
     @Override
     public void run() {
-        String userName = readLine("\nEnter your role: ");
-        client.setUserName(userName);
-        socketWriter.println(userName);
-
         client.startReadThread();
 
         String text;

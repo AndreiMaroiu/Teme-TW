@@ -1,4 +1,4 @@
-package StateMachine;
+package ServerStates;
 
 import java.io.PrintWriter;
 
@@ -6,10 +6,10 @@ public final class StateMachine
 {
     private final PrintWriter writer;
     private State state;
+    private boolean canClose = false;
 
-    public StateMachine(State state, PrintWriter writer)
+    public StateMachine(PrintWriter writer)
     {
-        setState(state);
         this.writer = writer;
     }
 
@@ -27,5 +27,14 @@ public final class StateMachine
     public PrintWriter getWriter()
     {
         return writer;
+    }
+
+    public void close()
+    {
+        canClose = true;
+    }
+
+    public boolean canClose() {
+        return canClose;
     }
 }

@@ -1,4 +1,4 @@
-package StateMachine;
+package ServerStates;
 
 import java.io.BufferedReader;
 
