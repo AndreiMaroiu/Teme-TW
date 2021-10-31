@@ -1,0 +1,18 @@
+[
+  {
+    "name": "Predeal",
+    "coordinates": {
+      "x": 2,
+      "y": 3
+    },
+    "weather": "cloudy"
+  },
+  {
+    "name": "Brasov",
+    "coordinates": {
+      "x": 1,
+      "y": 7
+    },
+    "weather": "clear"
+  }
+]
