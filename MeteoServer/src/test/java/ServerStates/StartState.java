@@ -15,7 +15,7 @@ public final class StartState extends State
     @Override
     public void begin()
     {
-        stateMachine.getWriter().println("enter your role:");
+        stateMachine.getWriter().println("Enter your role:");
     }
 
     @Override
@@ -23,43 +23,29 @@ public final class StartState extends State
     {
         try
         {
-            String userType = getUserType(reader);
+            String userType = reader.readLine();
 
             if (userType.equals("admin"))
             {
                 stateMachine.setState(new AdminStartState(stateMachine));
+                System.out.println("New client connected!");
             }
             else if (userType.equals("user"))
             {
                 stateMachine.setState(new UserStartState(stateMachine));
+                System.out.println("New client connected!");
+            }
+            else
+            {
+                stateMachine.getWriter().println("Try to log as an admin or user!");
+                stateMachine.setState(new StartState(stateMachine));
             }
         }
         catch (IOException e)
         {
             System.out.println(e.getMessage());
             e.printStackTrace();
+            stateMachine.close();
         }
-    }
-
-    private String getUserType(BufferedReader reader) throws IOException
-    {
-        String userType;
-
-        while(true)
-        {
-            userType = reader.readLine();
-
-            if (userType.equals("admin") || userType.equals("user"))
-            {
-                System.out.println(userType + " Connected");
-                break;
-            }
-            else
-            {
-                stateMachine.getWriter().println("Try to log as a user or admin");
-            }
-        }
-
-        return userType;
     }
 }
