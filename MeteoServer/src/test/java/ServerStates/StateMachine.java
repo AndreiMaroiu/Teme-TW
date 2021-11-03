@@ -1,5 +1,7 @@
 package ServerStates;
 
+import MeteoServer.Server;
+
 import java.io.PrintWriter;
 
 public final class StateMachine
@@ -7,10 +9,12 @@ public final class StateMachine
     private final PrintWriter writer;
     private State state;
     private boolean canClose = false;
+    private final Server server;
 
-    public StateMachine(PrintWriter writer)
+    public StateMachine(PrintWriter writer, Server server)
     {
         this.writer = writer;
+        this.server = server;
     }
 
     public void setState(State state)
@@ -22,6 +26,11 @@ public final class StateMachine
     public State getState()
     {
        return state;
+    }
+
+    public Server getServer()
+    {
+        return server;
     }
 
     public PrintWriter getWriter()

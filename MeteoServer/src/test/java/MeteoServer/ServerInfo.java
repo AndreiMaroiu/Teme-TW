@@ -1,6 +1,7 @@
+package MeteoServer;
+
 import com.google.gson.Gson;
 
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -27,6 +28,11 @@ public final class ServerInfo
     {
         read(filePath);
         saveToFile(FILE_PATH);
+    }
+
+    public synchronized ArrayList<City> getCities()
+    {
+        return new ArrayList<>(cities);
     }
 
     public City getCity(Vector2 coordinates)

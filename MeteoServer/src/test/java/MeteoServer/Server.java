@@ -1,3 +1,5 @@
+package MeteoServer;
+
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -17,16 +19,21 @@ public final class Server
         serverInfo = new ServerInfo();
     }
 
+    public ServerInfo getServerInfo()
+    {
+        return serverInfo;
+    }
+
     public void execute()
     {
         try (ServerSocket serverSocket = new ServerSocket(port))
         {
-            System.out.println("Meteo Server is open on port " + port);
+            System.out.println("Meteo MeteoServer.Server is open on port " + port);
 
             while (true)
             {
                 Socket socket = serverSocket.accept();
-                System.out.println("New user connected");
+                System.out.println("New client connected!");
 
                 ClientThread newUser = new ClientThread(socket, this);
                 clientThreads.add(newUser);

@@ -1,4 +1,4 @@
-import java.io.Serializable;
+package MeteoServer;
 
 public class City
 {

@@ -1,3 +1,5 @@
+package MeteoServer;
+
 import ServerStates.*;
 
 import java.io.*;
@@ -25,7 +27,7 @@ public class ClientThread extends Thread
             reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             writer = new PrintWriter(socket.getOutputStream(), true);
 
-            StateMachine stateMachine = new StateMachine(writer);
+            StateMachine stateMachine = new StateMachine(writer, server);
             stateMachine.setState(new StartState(stateMachine));
 
             do

@@ -1,3 +1,5 @@
+package MeteoServer;
+
 public class Vector2
 {
     private int x;
