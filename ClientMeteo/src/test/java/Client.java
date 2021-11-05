@@ -4,11 +4,8 @@ import java.rmi.UnknownHostException;
 
 public class Client
 {
-    private String hostname;
-    private int port;
-    private String userName;
-    private Socket socket;
-    private ReadThread readThread;
+    private final String hostname;
+    private final int port;
 
     public Client(String hostname, int port)
     {
@@ -20,10 +17,7 @@ public class Client
     {
         try
         {
-            socket = new Socket(hostname, port);
-            System.out.println("Connected to the chat server");
-
-            new WriteThread(socket, this).start();
+            run();
         }
         catch (UnknownHostException ex)
         {
@@ -39,24 +33,11 @@ public class Client
         }
     }
 
-    public void startReadThread()
+    private void run() throws IOException
     {
-        readThread = new ReadThread(socket, this);
-        readThread.start();
-    }
+        Socket socket = new Socket(hostname, port);
+        System.out.println("Connected to the meteo server. Enter [bye] to close client");
 
-    public void stop()
-    {
-        readThread.stopConnection();
-    }
-
-    void setUserName(String userName)
-    {
-        this.userName = userName;
-    }
-
-    String getUserName()
-    {
-        return this.userName;
+        new WriteThread(socket).start();
     }
 }

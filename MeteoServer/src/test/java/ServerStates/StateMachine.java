@@ -1,15 +1,18 @@
 package ServerStates;
 
+import Responses.Response;
 import MeteoServer.Server;
+import com.google.gson.Gson;
 
 import java.io.PrintWriter;
 
 public final class StateMachine
 {
     private final PrintWriter writer;
-    private State state;
+    private State state = null;
     private boolean canClose = false;
     private final Server server;
+    private final Gson gson = new Gson();
 
     public StateMachine(PrintWriter writer, Server server)
     {
@@ -17,10 +20,22 @@ public final class StateMachine
         this.server = server;
     }
 
-    public void setState(State state)
+    public void setState(State newState)
     {
-        this.state = state;
-        state.begin();
+        if (this.state != null)
+        {
+            sendResponse(state.getFinalResponse());
+        }
+
+        state = newState;
+        sendResponse(state.begin());
+    }
+
+    private void sendResponse(Response response)
+    {
+        String message = gson.toJson(response);
+
+        writer.println(message);
     }
 
     public State getState()
@@ -31,11 +46,6 @@ public final class StateMachine
     public Server getServer()
     {
         return server;
-    }
-
-    public PrintWriter getWriter()
-    {
-        return writer;
     }
 
     public void close()

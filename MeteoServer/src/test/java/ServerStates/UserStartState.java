@@ -1,12 +1,12 @@
 package ServerStates;
 
-import MeteoServer.City;
-import MeteoServer.Vector2;
+import Responses.Response;
+import Responses.WriteResponse;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 
-public final class UserStartState extends State
+public class UserStartState extends State
 {
     public UserStartState(StateMachine stateMachine)
     {
@@ -14,25 +14,41 @@ public final class UserStartState extends State
     }
 
     @Override
-    public void begin() {
-        stateMachine.getWriter().println("Please enter a city coordinates (latitude and longitude)!");
+    public Response begin()
+    {
+        return new WriteResponse("What do you want to do ([view city] or [log out])");
     }
 
     @Override
-    public void readData(BufferedReader reader) {
+    public void readData(BufferedReader reader)
+    {
         try
         {
-            int lat = Integer.parseInt(reader.readLine());
-            int lon = Integer.parseInt(reader.readLine());
-            City city = stateMachine.getServer().getServerInfo().getCity(new Vector2(lat, lon));
+            String line = reader.readLine();
 
-            stateMachine.getWriter().println("Weather in " + city.getName() + " is " + city.getWeather());
-            stateMachine.setState(new UserStartState(stateMachine));
+            switch (line)
+            {
+            case "view city":
+                stateMachine.setState(new UserViewState(stateMachine));
+                break;
+            case "log out":
+                stateMachine.setState(new LoginState(stateMachine));
+                break;
+            default:
+                stateMachine.setState(new UserStartState(stateMachine));
+                break;
+            }
         }
         catch (IOException e)
         {
+            System.out.println("Could not read from client. Thread stopping.");
             stateMachine.close();
-            e.printStackTrace();
         }
+    }
+
+    @Override
+    public Response getFinalResponse()
+    {
+        return Response.Empty;
     }
 }

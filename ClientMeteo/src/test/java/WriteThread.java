@@ -1,27 +1,33 @@
 import java.io.*;
 import java.net.Socket;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
-public class WriteThread extends Thread {
+public class WriteThread extends Thread
+{
+    private final ReadHandler readHandler;
+    private final Socket socket;
     private PrintWriter socketWriter;
-    private Socket socket;
-    private Client client;
 
-    public WriteThread(Socket socket, Client client) {
+    public WriteThread(Socket socket)
+    {
         this.socket = socket;
-        this.client = client;
+        readHandler = new ReadHandler(socket);
 
-        try {
+        try
+        {
             OutputStream output = socket.getOutputStream();
-            socketWriter = new PrintWriter(output,true);
-        } catch (Exception ex) {
+            socketWriter = new PrintWriter(output, true);
+        }
+        catch (Exception ex)
+        {
             System.out.println("Error getting output stream: " + ex.getMessage());
             ex.printStackTrace();
         }
     }
 
-    private String readLine(String message)
+    private String readLine()
     {
-        System.out.print(message);
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
         try
@@ -36,20 +42,52 @@ public class WriteThread extends Thread {
     }
 
     @Override
-    public void run() {
-        client.startReadThread();
+    public void run()
+    {
+        try
+        {
+            String input;
 
-        String text;
-        do {
-            text = readLine("");
-            socketWriter.println(text);
-        } while (!text.equals("bye"));
-        client.stop();
+            do
+            {
+                String action = readHandler.readResponse();
+                input = readLine();
+                socketWriter.println(getOutput(input, action));
+                readHandler.readResponse();
+            } while (!input.equals("bye"));
 
-        try {
             socket.close();
-        } catch (Exception ex) {
-            System.out.println("Error writing to server: " + ex.getMessage());
         }
+        catch (IOException ex)
+        {
+            System.out.println("Error writing or reading to server: " + ex.getMessage());
+            System.out.println("Client closing");
+        }
+    }
+
+    private String getOutput(String input, String action)
+    {
+        String output = null;
+
+        if (action.equals("write"))
+        {
+            output = input;
+        }
+        else if (action.equals("readFile"))
+        {
+            try
+            {
+                Path path = Path.of(input);
+                String content = Files.readString(path);
+                output = content.trim().replace("\n", "").replace("\r", "");
+            }
+            catch (IOException e)
+            {
+                System.out.println("error reading the file");
+                System.out.println(e.getMessage());
+            }
+        }
+
+        return output;
     }
 }

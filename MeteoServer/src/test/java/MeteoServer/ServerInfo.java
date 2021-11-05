@@ -7,35 +7,42 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Vector;
 
-public final class ServerInfo
+public enum ServerInfo
 {
+    Instance;
+
     private static final String FILE_PATH = "cities.json";
 
-    private final ArrayList<City> cities = new ArrayList<>();
+    private final List<City> cities = new Vector<>();
 
-    public ServerInfo()
+    public void init()
     {
         read(FILE_PATH);
     }
 
-    public ServerInfo(String filePath)
+    public synchronized void update(City[] list)
     {
-        update(filePath);
-    }
+        cities.clear();
 
-    public void update(String filePath)
-    {
-        read(filePath);
+        for (var city: list)
+        {
+            cities.add(city);
+        }
+
         saveToFile(FILE_PATH);
+
+        System.out.println("Server info updated!");
     }
 
-    public synchronized ArrayList<City> getCities()
+    public synchronized List<City> getCities()
     {
-        return new ArrayList<>(cities);
+        return new Vector<>(cities);
     }
 
-    public City getCity(Vector2 coordinates)
+    public City getCity(Coordinates coordinates)
     {
         int minDistance = Integer.MAX_VALUE;
         City result = null;

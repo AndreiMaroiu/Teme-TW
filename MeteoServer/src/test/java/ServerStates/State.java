@@ -1,5 +1,7 @@
 package ServerStates;
 
+import Responses.Response;
+
 import java.io.BufferedReader;
 
 public abstract class State
@@ -11,6 +13,7 @@ public abstract class State
         this.stateMachine = stateMachine;
     }
 
-    public abstract void begin();
+    public abstract Response begin();
     public abstract void readData(BufferedReader reader);
+    public abstract Response getFinalResponse();
 }

@@ -28,7 +28,7 @@ public class ClientThread extends Thread
             writer = new PrintWriter(socket.getOutputStream(), true);
 
             StateMachine stateMachine = new StateMachine(writer, server);
-            stateMachine.setState(new StartState(stateMachine));
+            stateMachine.setState(new LoginState(stateMachine));
 
             do
             {

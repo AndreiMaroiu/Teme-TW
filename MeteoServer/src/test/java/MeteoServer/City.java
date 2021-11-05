@@ -3,10 +3,10 @@ package MeteoServer;
 public class City
 {
     private String name;
-    private Vector2 coordinates;
+    private Coordinates coordinates;
     private String weather;
 
-    public City(String name, Vector2 coordinates, String weather)
+    public City(String name, Coordinates coordinates, String weather)
     {
         this.name = name;
         this.coordinates = coordinates;
@@ -18,7 +18,7 @@ public class City
         return name;
     }
 
-    public Vector2 getCoordinates()
+    public Coordinates getCoordinates()
     {
         return coordinates;
     }

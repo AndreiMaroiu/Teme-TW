@@ -1,23 +1,28 @@
 package ServerStates;
 
 import MeteoServer.City;
+import Responses.Response;
+import MeteoServer.ServerInfo;
+import Responses.WriteResponse;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.List;
 
 public final class AdminStartState extends State
 {
+    private Response response = Response.Empty;
+
     public AdminStartState(StateMachine stateMachine)
     {
         super(stateMachine);
     }
 
     @Override
-    public void begin()
+    public Response begin()
     {
-        stateMachine.getWriter().println("What do you want to do? " +
-                "(Update city weather or update cities file or view cities)");
+        return new WriteResponse("What do you want to do? " +
+                "([update cities] file or [view] cities or [log out])");
     }
 
     @Override
@@ -27,19 +32,22 @@ public final class AdminStartState extends State
         {
             String line = reader.readLine();
 
-            // todo: handle data
-
-            if (line.equals("view"))
+            switch (line)
             {
-                var cities = stateMachine.getServer().getServerInfo().getCities();
-
-                stateMachine.getWriter().println(getCitiesOutput(cities).toString());
-
+            case "view":
+                var cities = ServerInfo.Instance.getCities();
+                response = new WriteResponse(getCitiesOutput(cities));
                 stateMachine.setState(new AdminStartState(stateMachine));
-            }
-            else if (line.equals("update city"))
-            {
+                break;
+            case "update cities":
                 stateMachine.setState(new AdminUpdateState(stateMachine));
+                break;
+            case "log out":
+                stateMachine.setState(new LoginState(stateMachine));
+                break;
+            default:
+                stateMachine.setState(new AdminStartState(stateMachine));
+                break;
             }
         }
         catch (IOException e)
@@ -49,14 +57,20 @@ public final class AdminStartState extends State
         }
     }
 
-    private String getCitiesOutput(ArrayList<City> cities)
+    @Override
+    public Response getFinalResponse()
+    {
+        return response;
+    }
+
+    private String getCitiesOutput(List<City> cities)
     {
         StringBuilder builder = new StringBuilder();
         builder.append("All cities:\n");
 
         for (var city : cities)
         {
-            builder.append(city + "\n");
+            builder.append(city).append("\n");
         }
 
         return builder.toString();

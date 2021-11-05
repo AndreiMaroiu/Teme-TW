@@ -10,25 +10,18 @@ public final class Server
 {
     private final int port;
     private final Set<ClientThread> clientThreads = new HashSet<>();
-    private final ServerInfo serverInfo;
 
     public Server(int port)
     {
         this.port = port;
-
-        serverInfo = new ServerInfo();
-    }
-
-    public ServerInfo getServerInfo()
-    {
-        return serverInfo;
+        ServerInfo.Instance.init();
     }
 
     public void execute()
     {
         try (ServerSocket serverSocket = new ServerSocket(port))
         {
-            System.out.println("Meteo MeteoServer.Server is open on port " + port);
+            System.out.println("Meteo server is now open on port " + port);
 
             while (true)
             {

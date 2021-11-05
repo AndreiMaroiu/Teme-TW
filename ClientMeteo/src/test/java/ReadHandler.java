@@ -1,25 +1,21 @@
+import com.google.gson.Gson;
+
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.Socket;
 
-public class ReadThread extends Thread
+public class ReadHandler
 {
     private BufferedReader reader;
-    private Socket socket;
-    private Client client;
-    private boolean isRunning;
+    private final Gson gson = new Gson();
 
-    public ReadThread(Socket socket, Client client)
+    public ReadHandler(Socket socket)
     {
-        this.socket = socket;
-        this.client = client;
-
         try
         {
             InputStream input = socket.getInputStream();
             reader = new BufferedReader(new InputStreamReader(input));
-            isRunning = true;
         }
         catch (Exception ex)
         {
@@ -28,26 +24,20 @@ public class ReadThread extends Thread
         }
     }
 
-    @Override
-    public void run()
+    public String readResponse()
     {
         try
         {
-            while (isRunning)
-            {
-                String response = reader.readLine();
-                System.out.println("\n" + response);
-            }
+            String line = reader.readLine();
+            Response response = gson.fromJson(line, Response.class);
+            System.out.println(response.getMessage());
+            return response.getAction();
         }
         catch (Exception ex)
         {
             System.out.println("Error reading from server: " + ex.getMessage());
             ex.printStackTrace();
+            return "";
         }
-    }
-
-    public void stopConnection()
-    {
-        isRunning = false;
     }
 }
