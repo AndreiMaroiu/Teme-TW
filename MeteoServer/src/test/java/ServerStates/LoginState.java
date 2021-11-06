@@ -8,7 +8,6 @@ import java.io.IOException;
 
 public final class LoginState extends State
 {
-    private String userType;
     private Response finalResponse = Response.Empty;
 
     public LoginState(StateMachine stateMachine)
@@ -19,7 +18,7 @@ public final class LoginState extends State
     @Override
     public Response begin()
     {
-        return new WriteResponse("Enter your role:");
+        return new WriteResponse("Enter your role ([user] or [admin]):");
     }
 
     @Override
@@ -27,19 +26,19 @@ public final class LoginState extends State
     {
         try
         {
-            userType = reader.readLine();
+            String userType = reader.readLine();
 
             switch (userType)
             {
             case "admin":
-                stateMachine.setState(new AdminStartState(stateMachine));
                 System.out.println("New admin connected!");
                 finalResponse = new WriteResponse("You are now logged in as: " + userType);
+                stateMachine.setState(new AdminStartState(stateMachine));
                 break;
             case "user":
-                stateMachine.setState(new UserStartState(stateMachine));
                 System.out.println("New user connected!");
                 finalResponse = new WriteResponse("You are now logged in as: " + userType);
+                stateMachine.setState(new UserStartState(stateMachine));
                 break;
             default:
                 finalResponse = new WriteResponse("Try to log as an admin or user!");
@@ -50,7 +49,6 @@ public final class LoginState extends State
         catch (IOException e)
         {
             System.out.println(e.getMessage());
-            e.printStackTrace();
             stateMachine.close();
         }
     }

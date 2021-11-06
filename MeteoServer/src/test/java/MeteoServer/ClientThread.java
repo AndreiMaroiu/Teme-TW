@@ -1,7 +1,6 @@
 package MeteoServer;
 
 import ServerStates.*;
-
 import java.io.*;
 import java.net.Socket;
 import java.net.SocketException;
@@ -9,9 +8,7 @@ import java.net.SocketException;
 public class ClientThread extends Thread
 {
     private final Server server;
-    private Socket socket;
-    private PrintWriter writer;
-    private BufferedReader reader;
+    private final Socket socket;
 
     public ClientThread(Socket socket, Server server)
     {
@@ -24,10 +21,10 @@ public class ClientThread extends Thread
     {
         try
         {
-            reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            writer = new PrintWriter(socket.getOutputStream(), true);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            PrintWriter writer = new PrintWriter(socket.getOutputStream(), true);
 
-            StateMachine stateMachine = new StateMachine(writer, server);
+            StateMachine stateMachine = new StateMachine(writer);
             stateMachine.setState(new LoginState(stateMachine));
 
             do
@@ -35,7 +32,6 @@ public class ClientThread extends Thread
                 stateMachine.getState().readData(reader);
             } while (!stateMachine.canClose());
 
-            // TODO server remove user if necessary
             socket.close();
         }
         catch(SocketException ex)
@@ -53,13 +49,5 @@ public class ClientThread extends Thread
             System.out.println("Exception: " + ex.getMessage());
             ex.printStackTrace();
         }
-    }
-
-    /**
-     * Sends a message to the client.
-     */
-    public void sendMessage(String message)
-    {
-        writer.println(message);
     }
 }

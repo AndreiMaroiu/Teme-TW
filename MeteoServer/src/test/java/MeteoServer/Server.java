@@ -3,13 +3,14 @@ package MeteoServer;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public final class Server
 {
+    private static final int MAX_THREADS = 10;
+
     private final int port;
-    private final Set<ClientThread> clientThreads = new HashSet<>();
 
     public Server(int port)
     {
@@ -19,6 +20,8 @@ public final class Server
 
     public void execute()
     {
+        ExecutorService executorService = Executors.newFixedThreadPool(MAX_THREADS);
+
         try (ServerSocket serverSocket = new ServerSocket(port))
         {
             System.out.println("Meteo server is now open on port " + port);
@@ -29,8 +32,7 @@ public final class Server
                 System.out.println("New client connected!");
 
                 ClientThread newUser = new ClientThread(socket, this);
-                clientThreads.add(newUser);
-                newUser.start();
+                executorService.execute(newUser);
             }
         }
         catch (IOException ex)

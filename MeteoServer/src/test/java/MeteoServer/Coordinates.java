@@ -21,16 +21,6 @@ public class Coordinates
         return longitude;
     }
 
-    public void setLatitude(int latitude)
-    {
-        this.latitude = latitude;
-    }
-
-    public void setLongitude(int longitude)
-    {
-        this.longitude = longitude;
-    }
-
     public Coordinates minus(Coordinates other)
     {
         return new Coordinates(latitude - other.latitude, longitude - other.longitude);

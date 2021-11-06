@@ -1,12 +1,11 @@
 package MeteoServer;
 
 import com.google.gson.Gson;
-
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Vector;
 
@@ -20,19 +19,14 @@ public enum ServerInfo
 
     public void init()
     {
-        read(FILE_PATH);
+        read();
     }
 
     public synchronized void update(City[] list)
     {
         cities.clear();
-
-        for (var city: list)
-        {
-            cities.add(city);
-        }
-
-        saveToFile(FILE_PATH);
+        Collections.addAll(cities, list);
+        saveToFile();
 
         System.out.println("Server info updated!");
     }
@@ -64,20 +58,17 @@ public enum ServerInfo
         return result;
     }
 
-    public synchronized void read(String filePath)
+    public synchronized void read()
     {
         cities.clear();
 
         try
         {
             Gson gson = new Gson();
-            String content = Files.readString(Path.of(filePath));
+            String content = Files.readString(Path.of(FILE_PATH));
             City[] list = gson.fromJson(content, City[].class);
 
-            for (City city : list)
-            {
-                cities.add(city);
-            }
+            Collections.addAll(cities, list);
         }
         catch (IOException ex)
         {
@@ -86,9 +77,9 @@ public enum ServerInfo
         }
     }
 
-    private void saveToFile(String filePath)
+    private void saveToFile()
     {
-        try (FileWriter writer = new FileWriter(filePath)){
+        try (FileWriter writer = new FileWriter(ServerInfo.FILE_PATH)){
             Gson gson = new Gson();
             synchronized (this) {
                 gson.toJson(cities, writer);
@@ -97,7 +88,6 @@ public enum ServerInfo
         catch (IOException e)
         {
             System.out.println(e.getMessage());
-            e.printStackTrace();
         }
     }
 }

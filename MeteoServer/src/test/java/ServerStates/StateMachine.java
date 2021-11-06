@@ -11,13 +11,11 @@ public final class StateMachine
     private final PrintWriter writer;
     private State state = null;
     private boolean canClose = false;
-    private final Server server;
     private final Gson gson = new Gson();
 
-    public StateMachine(PrintWriter writer, Server server)
+    public StateMachine(PrintWriter writer)
     {
         this.writer = writer;
-        this.server = server;
     }
 
     public void setState(State newState)
@@ -41,11 +39,6 @@ public final class StateMachine
     public State getState()
     {
        return state;
-    }
-
-    public Server getServer()
-    {
-        return server;
     }
 
     public void close()

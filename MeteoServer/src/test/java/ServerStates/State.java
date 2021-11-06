@@ -1,7 +1,6 @@
 package ServerStates;
 
 import Responses.Response;
-
 import java.io.BufferedReader;
 
 public abstract class State

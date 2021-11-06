@@ -35,7 +35,7 @@ public class AdminUpdateState extends State
             String input = reader.readLine();
             System.out.println("json input: " + input);
 
-            if (input.equals("null") || input == null || input.equals(""))
+            if (input.equals("null") || input.equals(""))
             {
                 stateMachine.setState(new AdminUpdateState(stateMachine));
                 return;

@@ -2,9 +2,9 @@ package MeteoServer;
 
 public class City
 {
-    private String name;
-    private Coordinates coordinates;
-    private String weather;
+    private final String name;
+    private final Coordinates coordinates;
+    private final String weather;
 
     public City(String name, Coordinates coordinates, String weather)
     {
@@ -26,11 +26,6 @@ public class City
     public String getWeather()
     {
         return weather;
-    }
-
-    public void setWeather(String weather)
-    {
-        this.weather = weather;
     }
 
     @Override
