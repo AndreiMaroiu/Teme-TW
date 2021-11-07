@@ -6,7 +6,6 @@ import Responses.Response;
 import Responses.WriteResponse;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 
@@ -41,13 +40,13 @@ public class AdminUpdateState extends State
                 return;
             }
 
-            ServerInfo.Instance.update(gson.fromJson(input, City[].class));
+            ServerInfo.INSTANCE.update(gson.fromJson(input, City[].class));
             isUpdated = true;
             stateMachine.setState(new AdminStartState(stateMachine));
         }
         catch (JsonSyntaxException e)
         {
-            System.out.println("could not read json");
+            System.out.println("Could not read json");
             stateMachine.setState(new AdminUpdateState(stateMachine));
         }
         catch (IOException e)
@@ -65,7 +64,7 @@ public class AdminUpdateState extends State
         }
         else
         {
-            return new WriteResponse("Please enter a valid input!");
+            return new WriteResponse("Please enter a valid file!");
         }
     }
 }

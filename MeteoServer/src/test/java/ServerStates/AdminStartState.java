@@ -35,7 +35,7 @@ public final class AdminStartState extends State
             switch (line)
             {
             case "view":
-                var cities = ServerInfo.Instance.getCities();
+                var cities = ServerInfo.INSTANCE.getCities();
                 response = new WriteResponse(getCitiesOutput(cities));
                 stateMachine.setState(new AdminStartState(stateMachine));
                 break;

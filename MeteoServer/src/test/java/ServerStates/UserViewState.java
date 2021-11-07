@@ -9,6 +9,8 @@ import java.io.IOException;
 
 public final class UserViewState extends State
 {
+    private static final String WRONG_INPUT_MESSAGE = "Please enter latitude and longitude to view a city";
+
     private Response finalResponse = Response.Empty;
 
     public UserViewState(StateMachine stateMachine)
@@ -27,17 +29,27 @@ public final class UserViewState extends State
     {
         try
         {
-            String[] items = reader.readLine().split(" ");
+            String line = reader.readLine();
 
-            if (items.length < 2)
+            if (line == null || line.equals("") || line.equals("null"))
             {
+                finalResponse = new WriteResponse(WRONG_INPUT_MESSAGE);
                 stateMachine.setState(new UserViewState(stateMachine));
                 return;
             }
 
-            int lat = Integer.parseInt(items[0]);
-            int lon = Integer.parseInt(items[1]);
-            City city = ServerInfo.Instance.getCity(new Coordinates(lat, lon));
+            String[] items = line.split(" ");
+
+            if (items.length < 2)
+            {
+                finalResponse = new WriteResponse(WRONG_INPUT_MESSAGE);
+                stateMachine.setState(new UserViewState(stateMachine));
+                return;
+            }
+
+            float lat = Float.parseFloat(items[0]);
+            float lon = Float.parseFloat(items[1]);
+            City city = ServerInfo.INSTANCE.getCity(new Coordinates(lat, lon));
 
             finalResponse = new WriteResponse("Weather in " + city.getName() + " is " + city.getWeather());
             stateMachine.setState(new UserStartState(stateMachine));

@@ -2,21 +2,21 @@ package MeteoServer;
 
 public class Coordinates
 {
-    private int latitude;
-    private int longitude;
+    private final float latitude;
+    private final float longitude;
 
-    public Coordinates(int x, int y)
+    public Coordinates(float x, float y)
     {
         this.latitude = x;
         this.longitude = y;
     }
 
-    public int getLatitude()
+    public float getLatitude()
     {
         return latitude;
     }
 
-    public int getLongitude()
+    public float getLongitude()
     {
         return longitude;
     }
@@ -26,7 +26,7 @@ public class Coordinates
         return new Coordinates(latitude - other.latitude, longitude - other.longitude);
     }
 
-    public int sqrtMagnitude()
+    public float sqrLength()
     {
         return (latitude * latitude) + (longitude * longitude);
     }

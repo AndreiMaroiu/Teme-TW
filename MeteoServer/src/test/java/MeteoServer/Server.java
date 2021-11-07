@@ -15,7 +15,6 @@ public final class Server
     public Server(int port)
     {
         this.port = port;
-        ServerInfo.Instance.init();
     }
 
     public void execute()

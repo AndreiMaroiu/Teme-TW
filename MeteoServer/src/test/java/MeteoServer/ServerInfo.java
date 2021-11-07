@@ -11,13 +11,12 @@ import java.util.Vector;
 
 public enum ServerInfo
 {
-    Instance;
+    INSTANCE();
 
     private static final String FILE_PATH = "cities.json";
-
     private final List<City> cities = new Vector<>();
 
-    public void init()
+    ServerInfo()
     {
         read();
     }
@@ -31,22 +30,21 @@ public enum ServerInfo
         System.out.println("Server info updated!");
     }
 
-    public synchronized List<City> getCities()
+    public List<City> getCities()
     {
-        return new Vector<>(cities);
+        return cities;
     }
 
     public City getCity(Coordinates coordinates)
     {
-        int minDistance = Integer.MAX_VALUE;
+        float minDistance = Float.MAX_VALUE;
         City result = null;
 
         synchronized(this)
         {
             for (City city : cities)
             {
-                int distance = city.getCoordinates().minus(coordinates).sqrtMagnitude();
-
+                float distance = city.getCoordinates().minus(coordinates).sqrLength();
                 if (distance < minDistance)
                 {
                     result = city;
@@ -73,15 +71,16 @@ public enum ServerInfo
         catch (IOException ex)
         {
             System.out.println(ex.getMessage());
-            ex.printStackTrace();
         }
     }
 
     private void saveToFile()
     {
-        try (FileWriter writer = new FileWriter(ServerInfo.FILE_PATH)){
+        try (FileWriter writer = new FileWriter(ServerInfo.FILE_PATH))
+        {
             Gson gson = new Gson();
-            synchronized (this) {
+            synchronized (this)
+            {
                 gson.toJson(cities, writer);
             }
         }
