@@ -66,4 +66,27 @@ public class Validate {
             System.err.println(e.getMessage());
         }
     }
+
+    public static boolean updateUser(User user)
+    {
+        try
+        {
+            Session session = sessionFactory.openSession();
+            session.beginTransaction();
+
+            session.update(user);
+
+            session.getTransaction().commit();
+            session.close();
+
+            return true;
+        }
+        catch (Exception e)
+        {
+            System.err.println("Got an exception!");
+            System.err.println(e.getMessage());
+
+            return false;
+        }
+    }
 }

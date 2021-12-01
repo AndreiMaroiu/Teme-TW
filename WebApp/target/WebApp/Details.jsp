@@ -1,4 +1,4 @@
-<%--
+<%@ page import="java.util.Calendar" %><%--
   Created by IntelliJ IDEA.
   User: Achi
   Date: 28-Nov-21
@@ -21,12 +21,31 @@
     %>
     <h2>My Details</h2>
 
-    <p>Username: ${user.username}</p>
-
-    <form action="Details">
-        <p>Name: <input type="text" name="name" value="${user.name}"/></p>
-        <p>Address: <input type="text" name="address" value="${user.address}"/></p>
-        <p>Birthday: <input type="text" name="birthday" value="${user.birthday}"/></p>
+    <form method="post" action="Details">
+        <table>
+            <tr>
+                <td>Username:</td>
+                <Td>${user.username}</Td>
+            </tr>
+            <tr>
+                <td>Name:</td>
+                <td><input type="text" name="name" value="${user.name}"/></td>
+            </tr>
+            <tr>
+                <td>Address:</td>
+                <td><input type="text" name="address" value="${user.address}"/></td>
+            </tr>
+            <tr>
+                <td>Birthday:</td>
+                <td><input type="text" name="day" value="${user.birthday.date}"/></td>
+                <td>
+                    <input type="text" name="month" value="${(user.birthday != null) ? user.birthday.month + 1 : null}"/>
+                </td>
+                <td>
+                    <input type="text" name="year" value="${(user.birthday != null) ? user.birthday.year + 1900 : null}"/>
+                </td>
+            </tr>
+        </table>
 
         <input type="submit" value="Save"/>
     </form>
