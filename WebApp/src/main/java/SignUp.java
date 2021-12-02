@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebServlet("/SignUp")
+@WebServlet(name = "SignUp", value = "/SignUp")
 public class SignUp extends HttpServlet
 {
     private static final String MESSAGE = "signupmessage";

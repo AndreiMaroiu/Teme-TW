@@ -14,11 +14,40 @@
     <h1>Sign Up</h1>
 
     <form action="SignUp">
-        Email*: <input type="text" name="email"/>
-        Password*: <input type="password" name="password"/>
-        Confirm Password*: <input type="password" name="confirmPass"/>
-        Name: <input type="text" name="name"/>
-        Address: <input type="text" name="address"/>
+        <table>
+            <tr>
+                <td>Username*:</td>
+                <td><input type="text" name="username"/></td>
+            </tr>
+            <tr>
+                <td>Password*:</td>
+                <td><input type="password" name="password"/></td>
+            </tr>
+            <tr>
+                <td>Confirm Password*:</td>
+                <td><input type="password" name="confirmPass"/></td>
+            </tr>
+            <tr>
+                <td>Name:</td>
+                <td><input type="text" name="name"/></td>
+            </tr>
+            <tr>
+                <td>Address:</td>
+                <td><input type="text" name="address"/></td>
+            </tr>
+            <tr>
+                <td>Birthday:</td>
+                <td><input type="text" name="day"/></td>
+                <td><input type="text" name="month"/></td>
+                <td><input type="text" name="year"/></td>
+            </tr>
+        </table>
+
+        <input type="submit" value="Sign Up"/>
+    </form>
+
+    <form action="Logout">
+        <input type="submit" value="Cancel"/>
     </form>
 </body>
 </html>

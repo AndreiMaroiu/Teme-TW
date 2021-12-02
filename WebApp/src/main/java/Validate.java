@@ -3,6 +3,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.query.Query;
 
 import java.util.List;
 
@@ -87,6 +88,29 @@ public class Validate {
             System.err.println(e.getMessage());
 
             return false;
+        }
+    }
+
+    public static User findUserByName(String name)
+    {
+        try{
+            Session session = sessionFactory.openSession();
+            session.beginTransaction();
+
+            Query query = session.createQuery("from User where username = :username", User.class);
+            query.setParameter("username", name);
+
+            List<User> result = query.list();
+
+            session.getTransaction().commit();
+            session.close();
+
+            return result.get(0);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            return null;
         }
     }
 }

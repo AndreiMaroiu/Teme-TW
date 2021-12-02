@@ -23,7 +23,12 @@
                     </td>
                 </tr>
             </table>
-            <input type="submit" value="login"/>
+            <input type="submit" value="Login" name="button"/>
+            <input type="submit" value="Forgot Password" name="button"/>
+        </form>
+
+        <form action="RedirectSignUp">
+            <input type="submit" value="Sign Up"/>
         </form>
     </body>
 </html>

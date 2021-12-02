@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-@WebServlet("/Details")
+@WebServlet(name = "Details", value = "/Details")
 public class Details extends HttpServlet
 {
     @Override
