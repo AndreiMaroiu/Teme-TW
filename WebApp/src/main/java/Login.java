@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
 
 @WebServlet(name = "Login", value = "/Login")
 public class Login extends HttpServlet {
@@ -25,7 +24,16 @@ public class Login extends HttpServlet {
         case "Forgot Password":
             redirectPassword(request, response);
             break;
+        case "Sign Up":
+            redirectSignUp(request, response);
+            break;
         }
+    }
+
+    private void redirectSignUp(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+    {
+        RequestDispatcher dispatcher = request.getRequestDispatcher("SignUp.jsp");
+        dispatcher.forward(request, response);
     }
 
     private void login(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException

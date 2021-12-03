@@ -11,6 +11,9 @@
 <html>
 <head>
     <title>Details</title>
+
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <link rel="StyleSheet" href="${pageContext.request.contextPath}/Css/site.css" type="text/css"/>
 </head>
 <body>
     <%
@@ -48,11 +51,17 @@
             </tr>
         </table>
 
-        <input type="submit" value="Save"/>
-    </form>
+        <table>
+            <tr>
+                <td>
+                    <input type="submit" value="Save" class="button-center" name="button"/>
+                </td>
+                <td>
+                    <input type="submit" value="Log out" class="button-center" name="button">
+                </td>
+            </tr>
+        </table>
 
-    <form action="Logout">
-        <input type="submit" value="logout">
     </form>
 </body>
 </html>
