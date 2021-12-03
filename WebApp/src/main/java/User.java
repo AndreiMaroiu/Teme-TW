@@ -1,7 +1,5 @@
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Entity
@@ -9,6 +7,7 @@ import java.util.Date;
 public class User
 {
     @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Integer id;
 
     @Column(name = "username")
@@ -66,6 +65,17 @@ public class User
         return birthday;
     }
 
+    public String getBirthdayFormated()
+    {
+        if (birthday == null)
+        {
+            return null;
+        }
+
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        return formatter.format(birthday);
+    }
+
     public void setAddress(String address)
     {
         this.address = address;
@@ -73,7 +83,10 @@ public class User
 
     public void setBirthday(Date birthday)
     {
-        this.birthday = birthday;
+        if (birthday != null)
+        {
+            this.birthday = birthday;
+        }
     }
 
     public String getName()

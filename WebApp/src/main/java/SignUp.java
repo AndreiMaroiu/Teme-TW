@@ -1,3 +1,4 @@
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -9,54 +10,68 @@ import java.io.IOException;
 @WebServlet(name = "SignUp", value = "/SignUp")
 public class SignUp extends HttpServlet
 {
-    private static final String MESSAGE = "signupmessage";
-
     private HttpSession session;
     private HttpServletResponse response;
-
+    private HttpServletRequest request;
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
-        String email = request.getParameter("email");
+        String username = request.getParameter("username");
         String password = request.getParameter("password");
         String confirmPass = request.getParameter("confirmPass");
         String name = request.getParameter("name");
         String address = request.getParameter("address");
+        String date = request.getParameter("date");
 
-        session = request.getSession();
+        this.session = request.getSession();
         this.response = response;
+        this.request = request;
 
-        if (isNullOrEmpty(email))
+        User user = new User();
+        user.setUsername(username);
+        user.setPassword(password);
+        user.setName(name);
+        user.setAddress(address);
+        user.setBirthday(DateValidator.GetDate(date));
+
+        if (isNullOrEmpty(username))
         {
-            reloadPage("Enter a valid email!");
+            reloadPage("Enter a valid username!", user);
             return;
         }
 
         if (isNullOrEmpty(password))
         {
-            reloadPage("Enter a valid password!");
+            reloadPage("Enter a valid password!", user);
             return;
         }
 
         if (isNullOrEmpty(confirmPass) || !confirmPass.equals(password))
         {
-            reloadPage("Password does not match!");
+            reloadPage("Password does not match!", user);
             return;
         }
 
-        User user = new User();
-        user.setPassword(password);
-
-        Validate.addUser(user);
-
-        response.sendRedirect("Details.jsp");
+        if (Validate.addUser(user))
+        {
+            session.setAttribute("user", user);
+            RequestDispatcher dispatcher = request.getRequestDispatcher("Details.jsp");
+            dispatcher.forward(request, response);
+        }
+        else
+        {
+            reloadPage("Username already exists!", user);
+        }
     }
 
-    private void reloadPage(String message) throws IOException
+    private void reloadPage(String message, User user) throws IOException, ServletException
     {
-        session.setAttribute(MESSAGE, message);
-        response.sendRedirect("SignUp.jsp");
+        response.setContentType("text/html;charset=UTF-8");
+        response.getWriter().println(message);
+        session.setAttribute("user", user);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("SignUp.jsp");
+        dispatcher.include(request, response);
     }
 
     private static boolean isNullOrEmpty(String str)

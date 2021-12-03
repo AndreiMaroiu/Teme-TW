@@ -1,4 +1,6 @@
-<%--
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="java.util.Date" %>
+<%@ page import="java.text.ParseException" %><%--
   Created by IntelliJ IDEA.
   User: Achi
   Date: 28-Nov-21
@@ -18,6 +20,7 @@
             dispatcher.forward(request, response);
             return;
         }
+
     %>
     <h2>My Details</h2>
 
@@ -37,13 +40,11 @@
             </tr>
             <tr>
                 <td>Birthday:</td>
-                <td><input type="text" name="day" value="${user.birthday.date}"/></td>
                 <td>
-                    <input type="text" name="month" value="${(user.birthday != null) ? user.birthday.month + 1 : null}"/>
+                    <input type="date" name="date"
+                           value="${user.birthdayFormated}"/>
                 </td>
-                <td>
-                    <input type="text" name="year" value="${(user.birthday != null) ? user.birthday.year + 1900 : null}"/>
-                </td>
+
             </tr>
         </table>
 

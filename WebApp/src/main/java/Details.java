@@ -6,8 +6,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.GregorianCalendar;
 
 @WebServlet(name = "Details", value = "/Details")
 public class Details extends HttpServlet
@@ -21,13 +22,22 @@ public class Details extends HttpServlet
 
         String name = request.getParameter("name");
         String address = request.getParameter("address");
-        String day = request.getParameter("day");
-        String month = request.getParameter("month");
-        String year = request.getParameter("year");
+        String day = request.getParameter("date");
 
         user.setName(name);
         user.setAddress(address);
-        user.setBirthday(getDate(day, month, year));
+
+        Date newDate = DateValidator.GetDate(day);
+        DateValidator validator = new DateValidator();
+        if (!validator.validateDate(newDate))
+        {
+            response.getWriter().println(validator.getOutMessage());
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/Details.jsp");
+            dispatcher.include(request, response);
+            return;
+        }
+
+        user.setBirthday(newDate);
 
         if (Validate.updateUser(user))
         {
@@ -40,22 +50,6 @@ public class Details extends HttpServlet
             response.getWriter().println("Failed to update details!");
             RequestDispatcher dispatcher = request.getRequestDispatcher("/Details.jsp");
             dispatcher.include(request, response);
-        }
-    }
-
-    private Date getDate(String day, String month, String year)
-    {
-        try
-        {
-            int yearInt = Integer.parseInt(year);
-            int monthInt = Integer.parseInt(month);
-            int dayInt = Integer.parseInt(day);
-            Date date = new GregorianCalendar(yearInt, monthInt - 1, dayInt).getTime();
-            return date;
-        }
-        catch (Exception e)
-        {
-            return null;
         }
     }
 }

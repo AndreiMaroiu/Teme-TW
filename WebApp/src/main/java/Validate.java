@@ -15,9 +15,11 @@ public class Validate {
     static {
         registry = new StandardServiceRegistryBuilder().configure().build();
 
-        try {
+        try
+        {
             sessionFactory = new MetadataSources(registry).buildMetadata().buildSessionFactory();
-        } catch (Exception e)
+        }
+        catch (Exception e)
         {
             e.printStackTrace();
         }
@@ -49,7 +51,7 @@ public class Validate {
         return null;
     }
 
-    public static void addUser(User user)
+    public static boolean addUser(User user)
     {
         try
         {
@@ -60,11 +62,13 @@ public class Validate {
 
             session.getTransaction().commit();
             session.close();
+
+            return true;
         }
         catch (Exception e)
         {
-            System.err.println("Got an exception!");
-            System.err.println(e.getMessage());
+            e.printStackTrace();
+            return false;
         }
     }
 
@@ -84,9 +88,7 @@ public class Validate {
         }
         catch (Exception e)
         {
-            System.err.println("Got an exception!");
-            System.err.println(e.getMessage());
-
+            e.printStackTrace();
             return false;
         }
     }
