@@ -6,7 +6,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.io.PrintWriter;
 
 @WebServlet(name = "Login", value = "/Login")
 public class Login extends HttpServlet {
@@ -38,10 +37,7 @@ public class Login extends HttpServlet {
 
     private void login(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
-        response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
-
-        String email = request.getParameter("email");
+        String email = request.getParameter("username");
         String pass = request.getParameter("pass");
 
         User user = Validate.getUser(email, pass);
@@ -56,29 +52,22 @@ public class Login extends HttpServlet {
         }
         else
         {
-            out.println("Username or Password incorrect");
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/index.jsp");
-            dispatcher.include(request, response);
+            reloadPage(request, response, "Username or Password incorrect");
         }
     }
 
     private void redirectPassword(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
-        response.setContentType("text/html;charset=UTF-8");
         HttpSession session = request.getSession();
-        String username = request.getParameter("email");
+        String username = request.getParameter("username");
 
         if (username == null || username.isEmpty())
         {
-            response.getWriter().println("enter a username!");
-            RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
-            dispatcher.include(request, response);
+            reloadPage(request, response, "Enter a username!");
         }
         else if (Validate.findUserByName(username) == null)
         {
-            response.getWriter().println("enter a valid username!");
-            RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
-            dispatcher.include(request, response);
+            reloadPage(request, response, "Enter a valid username!");
         }
         else
         {
@@ -86,5 +75,12 @@ public class Login extends HttpServlet {
             RequestDispatcher dispatcher = request.getRequestDispatcher("ForgotPassword.jsp");
             dispatcher.forward(request, response);
         }
+    }
+
+    private void reloadPage(HttpServletRequest request, HttpServletResponse response, String message) throws IOException, ServletException
+    {
+        RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
+        dispatcher.include(request, response);
+        response.getWriter().println("<p class='warning'>" + message + "</p>");
     }
 }

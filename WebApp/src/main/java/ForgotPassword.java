@@ -9,9 +9,9 @@ public class ForgotPassword extends HttpServlet
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
-        String button = request.getParameter("button");
+//        response.setContentType("text/html;charset=UTF-8");
 
-        switch (button)
+        switch (request.getParameter("button"))
         {
         case "Cancel":
             cancel(request, response);
@@ -41,12 +41,15 @@ public class ForgotPassword extends HttpServlet
         }
         else
         {
-            response.setContentType("text/html;charset=UTF-8");
-
-            response.getWriter().println("Password does not match!");
-            RequestDispatcher dispatcher = request.getRequestDispatcher("ForgotPassword.jsp");
-            dispatcher.include(request, response);
+            reloadPage(request, response, "Password does not match!");
         }
+    }
+
+    private void reloadPage(HttpServletRequest request, HttpServletResponse response, String message) throws IOException, ServletException
+    {
+        RequestDispatcher dispatcher = request.getRequestDispatcher("ForgotPassword.jsp");
+        dispatcher.include(request, response);
+        response.getWriter().println("<p class='warning'>" + message + "</p>");
     }
 
     private void cancel(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException

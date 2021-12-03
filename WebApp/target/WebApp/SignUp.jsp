@@ -9,6 +9,9 @@
 <html>
 <head>
     <title>Sign Up</title>
+
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <link rel="StyleSheet" href="${pageContext.request.contextPath}/Css/site.css" type="text/css"/>
 </head>
 <body>
     <h1>Sign Up</h1>
@@ -18,41 +21,60 @@
             <tr>
                 <td>Username*:</td>
                 <td>
-                    <input type="text" name="username" required placeholder="username"
-                           oninvalid="this.setCustomValidity('Please enter a username!')"/>
+                    <label>
+                        <input type="text" name="username" required placeholder="username"
+                               oninvalid="this.setCustomValidity('Please enter a username!')"/>
+                    </label>
                 </td>
             </tr>
             <tr>
                 <td>Password*:</td>
                 <td>
-                    <input type="password" name="password" required placeholder="password"
-                            oninvalid="this.setCustomValidity('Please enter a password!')"/>
+                    <label>
+                        <input type="password" name="password" required placeholder="password"
+                                oninvalid="this.setCustomValidity('Please enter a password!')"/>
+                    </label>
                 </td>
             </tr>
             <tr>
                 <td>Confirm Password*:</td>
-                <td><input type="password" name="confirmPass" required placeholder="confirm password"
-                            oninvalid="this.setCustomValidity('Please reenter password!')"/></td>
+                <td>
+                    <label>
+                    <input type="password" name="confirmPass" required placeholder="confirm password"
+                                oninvalid="this.setCustomValidity('Please reenter password!')"/>
+                    </label>
+                </td>
             </tr>
             <tr>
                 <td>Name:</td>
-                <td><input type="text" name="name" placeholder="name"/></td>
+                <td>
+                    <label>
+                        <input type="text" name="name" placeholder="name"/>
+                    </label>
+                </td>
             </tr>
             <tr>
                 <td>Address:</td>
-                <td><input type="text" name="address" placeholder="address"/></td>
+                <td>
+                    <label>
+                        <input type="text" name="address" placeholder="address"/>
+                    </label>
+                </td>
             </tr>
             <tr>
                 <td>Birthday:</td>
-                <td><input type="date" name="date"></td>
+                <td>
+                    <label>
+                        <input type="date" name="date">
+                    </label>
+                </td>
             </tr>
         </table>
-
-        <input type="submit" value="Sign Up"/>
+        <br/>
+        <input type="submit" value="Sign Up" class="button-center round-button"/>
     </form>
-
     <form action="Logout">
-        <input type="submit" value="Cancel"/>
+        <input type="submit" value="Cancel" class="button-center round-button"/>
     </form>
 </body>
 </html>

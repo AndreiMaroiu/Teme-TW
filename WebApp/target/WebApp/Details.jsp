@@ -54,10 +54,10 @@
         <table>
             <tr>
                 <td>
-                    <input type="submit" value="Save" class="button-center" name="button"/>
+                    <input type="submit" value="Save" class="button-center round-button" name="button"/>
                 </td>
                 <td>
-                    <input type="submit" value="Log out" class="button-center" name="button">
+                    <input type="submit" value="Log out" class="button-center round-button" name="button">
                 </td>
             </tr>
         </table>

@@ -15,8 +15,7 @@
                         </td>
                         <td>
                             <label>
-                                <input type="text" name="email" required placeholder="username"
-                                        oninvalid="this.setCustomValidity('Please enter a username!')"/>
+                                <input type="text" name="username" placeholder="username"/>
                             </label>
                         </td>
                     </tr>
@@ -34,19 +33,14 @@
                 <table>
                     <tr>
                         <td>
-                            <input class="button-center" type="submit" value="Login" name="button"/>
+                            <input class="button-center round-button" type="submit" value="Login" name="button"/>
                         </td>
-                    </tr>
-                    <tr>
                         <td>
-                            <input class="button-center" type="submit" value="Sign Up" name="button"/>
+                            <input class="button-center round-button" type="submit" value="Sign Up" name="button"/>
                         </td>
-                    </tr>
-                    <tr>
                         <td>
-                            <input class="button-center" type="submit" value="Forgot Password" name="button"/>
+                            <input class="button-center round-button" type="submit" value="Forgot Password" name="button"/>
                         </td>
-                    </tr>
                 </table>
             </form>
 

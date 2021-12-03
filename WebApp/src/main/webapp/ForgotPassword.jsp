@@ -10,6 +10,9 @@
 <html>
 <head>
     <title>Title</title>
+
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <link rel="StyleSheet" href="${pageContext.request.contextPath}/Css/site.css" type="text/css"/>
 </head>
 <body>
     <%
@@ -29,15 +32,32 @@
             </tr>
             <tr>
                 <td>New password:</td>
-                <td><input type="password" name="password"></td>
+                <td>
+                    <label>
+                        <input type="password" name="password">
+                    </label>
+                </td>
             </tr>
             <tr>
                 <td>Confirm password:</td>
-                <td><input type="password" name="confirmPass"></td>
+                <td>
+                    <label>
+                        <input type="password" name="confirmPass">
+                    </label>
+                </td>
             </tr>
         </table>
-        <input type="submit" value="Confirm" name="button"/>
-        <input type="submit" value="Cancel" name="button"/>
+        <table>
+            <tr>
+                <td>
+                    <input type="submit" value="Confirm" name="button" class="round-button button-center"/>
+                </td>
+                <td>
+                    <input type="submit" value="Cancel" name="button" class="round-button button-center"/>
+                </td>
+            </tr>
+        </table>
+
     </form>
 </body>
 </html>

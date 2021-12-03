@@ -15,6 +15,7 @@ public class Logout extends HttpServlet
     {
         HttpSession session = request.getSession();
         session.removeAttribute("username");
+        session.removeAttribute("user");
         session.invalidate();
         RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
         dispatcher.forward(request, response);
