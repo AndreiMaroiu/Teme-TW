@@ -1,3 +1,8 @@
+package Servlets;
+
+import DAO.User;
+import DAO.UserDao;
+
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
@@ -30,9 +35,9 @@ public class ForgotPassword extends HttpServlet
 
         if (password != null && password.equals(confirmPass))
         {
-            User user = Validate.findUserByName((String)session.getAttribute("username"));
+            User user = UserDao.findUserByName((String)session.getAttribute("username"));
             user.setPassword(password);
-            Validate.updateUser(user);
+            UserDao.updateUser(user);
             session.setAttribute("user", user);
             session.removeAttribute("username");
 

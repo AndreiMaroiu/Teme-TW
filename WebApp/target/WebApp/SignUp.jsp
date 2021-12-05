@@ -70,6 +70,7 @@
                 </td>
             </tr>
         </table>
+        <p>Every field marked with * is obligatory!</p>
         <br/>
         <input type="submit" value="Sign Up" class="button-center round-button"/>
     </form>

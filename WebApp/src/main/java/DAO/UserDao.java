@@ -1,3 +1,5 @@
+package DAO;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
@@ -7,7 +9,8 @@ import org.hibernate.query.Query;
 
 import java.util.List;
 
-public class Validate {
+public class UserDao
+{
 
     private static SessionFactory sessionFactory = null;
     private static final StandardServiceRegistry registry;

@@ -1,3 +1,9 @@
+package Servlets;
+
+import DAO.DateValidator;
+import DAO.User;
+import DAO.UserDao;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -53,7 +59,7 @@ public class SignUp extends HttpServlet
             return;
         }
 
-        if (Validate.addUser(user))
+        if (UserDao.addUser(user))
         {
             session.setAttribute("user", user);
             RequestDispatcher dispatcher = request.getRequestDispatcher("Details.jsp");

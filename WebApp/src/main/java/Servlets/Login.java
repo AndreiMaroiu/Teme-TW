@@ -1,3 +1,8 @@
+package Servlets;
+
+import DAO.User;
+import DAO.UserDao;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -40,7 +45,7 @@ public class Login extends HttpServlet {
         String email = request.getParameter("username");
         String pass = request.getParameter("pass");
 
-        User user = Validate.getUser(email, pass);
+        User user = UserDao.getUser(email, pass);
 
         if (user != null)
         {
@@ -65,7 +70,7 @@ public class Login extends HttpServlet {
         {
             reloadPage(request, response, "Enter a username!");
         }
-        else if (Validate.findUserByName(username) == null)
+        else if (UserDao.findUserByName(username) == null)
         {
             reloadPage(request, response, "Enter a valid username!");
         }

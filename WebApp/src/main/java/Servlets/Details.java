@@ -1,3 +1,9 @@
+package Servlets;
+
+import DAO.DateValidator;
+import DAO.User;
+import DAO.UserDao;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -48,7 +54,7 @@ public class Details extends HttpServlet
 
         user.setBirthday(newDate);
 
-        if (Validate.updateUser(user))
+        if (UserDao.updateUser(user))
         {
             reload(request, response, "Details updated successfully!");
         }

@@ -1,3 +1,5 @@
+package DAO;
+
 import javax.persistence.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
