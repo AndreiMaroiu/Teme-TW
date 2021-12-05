@@ -22,7 +22,7 @@
                 <td>Username*:</td>
                 <td>
                     <label>
-                        <input type="text" name="username" required placeholder="username"
+                        <input type="text" name="username" required placeholder="username" value="${user.username}"
                                oninvalid="this.setCustomValidity('Please enter a username!')"/>
                     </label>
                 </td>
@@ -49,7 +49,7 @@
                 <td>Name:</td>
                 <td>
                     <label>
-                        <input type="text" name="name" placeholder="name"/>
+                        <input type="text" name="name" placeholder="name" value="${user.name}"/>
                     </label>
                 </td>
             </tr>
@@ -57,7 +57,7 @@
                 <td>Address:</td>
                 <td>
                     <label>
-                        <input type="text" name="address" placeholder="address"/>
+                        <input type="text" name="address" placeholder="address" value="${user.address}"/>
                     </label>
                 </td>
             </tr>
@@ -65,7 +65,7 @@
                 <td>Birthday:</td>
                 <td>
                     <label>
-                        <input type="date" name="date">
+                        <input type="date" name="date" value="${user.birthdayFormated}">
                     </label>
                 </td>
             </tr>

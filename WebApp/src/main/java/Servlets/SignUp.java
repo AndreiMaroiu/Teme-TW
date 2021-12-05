@@ -59,7 +59,15 @@ public class SignUp extends HttpServlet
             return;
         }
 
-        if (UserDao.addUser(user))
+        DateValidator validator = new DateValidator();
+        if (!validator.validateDate(user.getBirthday()))
+        {
+            reloadPage(validator.getOutMessage(), user);
+            return;
+        }
+
+        boolean updatedSuccessful = UserDao.addUser(user);
+        if (updatedSuccessful)
         {
             session.setAttribute("user", user);
             RequestDispatcher dispatcher = request.getRequestDispatcher("Details.jsp");
@@ -73,11 +81,10 @@ public class SignUp extends HttpServlet
 
     private void reloadPage(String message, User user) throws IOException, ServletException
     {
-        response.setContentType("text/html;charset=UTF-8");
-        response.getWriter().println(message);
         session.setAttribute("user", user);
         RequestDispatcher dispatcher = request.getRequestDispatcher("SignUp.jsp");
         dispatcher.include(request, response);
+        response.getWriter().println("<p class='warning'>" + message + "</p>");
     }
 
     private static boolean isNullOrEmpty(String str)

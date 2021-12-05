@@ -6,6 +6,7 @@ import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.query.Query;
+import org.hibernate.exception.*;
 
 import java.util.List;
 
@@ -67,6 +68,10 @@ public class UserDao
             session.close();
 
             return true;
+        }
+        catch (ConstraintViolationException e)
+        {
+            return false;
         }
         catch (Exception e)
         {
