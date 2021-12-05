@@ -65,7 +65,7 @@
                 <td>Birthday:</td>
                 <td>
                     <label>
-                        <input type="date" name="date">
+                        <input type="date" name="date" value="${user.birthdayFormated}">
                     </label>
                 </td>
             </tr>

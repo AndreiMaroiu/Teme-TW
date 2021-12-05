@@ -57,15 +57,13 @@ public class UserDao
 
     public static boolean addUser(User user)
     {
+        Session session = null;
         try
         {
-            Session session = sessionFactory.openSession();
+            session = sessionFactory.openSession();
             session.beginTransaction();
 
             session.save(user);
-
-            session.getTransaction().commit();
-            session.close();
 
             return true;
         }
@@ -77,6 +75,21 @@ public class UserDao
         {
             e.printStackTrace();
             return false;
+        }
+        finally
+        {
+            try
+            {
+                if (session != null)
+                {
+                    session.getTransaction().commit();
+                    session.close();
+                }
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -107,7 +120,7 @@ public class UserDao
             Session session = sessionFactory.openSession();
             session.beginTransaction();
 
-            Query query = session.createQuery("from User where username = :username", User.class);
+            Query<User> query = session.createQuery("from User where username = :username", User.class);
             query.setParameter("username", name);
 
             List<User> result = query.list();
