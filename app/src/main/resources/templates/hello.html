@@ -8,11 +8,9 @@
 
     <h1>Hello World!</h1>
     <p th:text="${name}"></p>
-
-    <div th:if="${true}">
-        Hello There General Kenobi!
-        My name is Achi!
-    </div>
+    <form th:action="@{/logout}" >
+        <button type="submit">Logout</button>
+    </form>
 
 </body>
 </html>
