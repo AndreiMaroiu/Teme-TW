@@ -1,21 +1,19 @@
 package com.achi.tw.app.Controllers;
 
 
+import com.achi.tw.app.Dao.ProductDao;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 @RestController
-public class Controller
+public class HomeController
 {
     @GetMapping({"/", "/home"})
     public ModelAndView hello(Model model)
     {
-        ModelAndView mav = new ModelAndView();
-        mav.setViewName("hello");
-
-        model.addAttribute("name", "Achi");
-
+        ModelAndView mav = new ModelAndView("home");
+        model.addAttribute("products", ProductDao.getProducts());
         return mav;
     }
 

@@ -8,7 +8,7 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
 interface ITransactionWork
 {
-    void doWork(Session session);
+    Object doWork(Session session);
 }
 
 public class DaoHelper
@@ -37,14 +37,14 @@ public class DaoHelper
         return session;
     }
 
-    public static void doTransaction(ITransactionWork method)
+    public static Object doTransaction(ITransactionWork method)
     {
         Session session = null;
         try
         {
             session = getSession();
 
-            method.doWork(session);
+            return method.doWork(session);
         }
         catch (Exception e)
         {
@@ -58,5 +58,7 @@ public class DaoHelper
                 session.close();
             }
         }
+
+        return null;
     }
 }
