@@ -19,7 +19,8 @@ public class HomeController
     public ModelAndView hello(Model model)
     {
         ModelAndView mav = new ModelAndView("home");
-        model.addAttribute("products", ProductDao.getProducts());
+        var products = ProductDao.getProducts();
+        model.addAttribute("products", products);
         return mav;
     }
 

@@ -1,31 +1,19 @@
 package com.achi.tw.app.Entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import lombok.Getter;
+import lombok.Setter;
 
+import javax.persistence.*;
+
+@Getter
+@Setter
 @Entity
 public class Role {
-    @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
-    private int roleId;
+    @Column(name = "role_id", nullable = false)
+    private Integer id;
+
+    @Column(name = "role_name")
     private String roleName;
-
-    public int getRoleId() {
-        return roleId;
-    }
-
-    public void setRoleId(int roleId) {
-        this.roleId = roleId;
-    }
-
-    public String getRoleName() {
-        return roleName;
-    }
-
-    public void setRoleName(String roleName) {
-        this.roleName = roleName;
-    }
 }
 

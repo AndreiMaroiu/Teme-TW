@@ -37,10 +37,10 @@ public class UserDetailsServiceImpl implements UserDetailsService
         if (user != null)
         {
             List<String> roleList = new ArrayList<String>();
-            for (Role role : user.getRoles())
-            {
-                roleList.add(role.getRoleName());
-            }
+//            for (Role role : user.getRoles())
+//            {
+//                roleList.add(role.getRoleName());
+//            }
 
             return org.springframework.security.core.userdetails.User.builder()
                     .username(user.getUsername())
@@ -60,8 +60,10 @@ public class UserDetailsServiceImpl implements UserDetailsService
 
     String[] getRoles(User user)
     {
-        List<Role> userRoles = user.getRoles();
-        String[] roles = new String[userRoles.size()];
-        return userRoles.toArray(roles);
+//        List<Role> userRoles = user.getRoles();
+//        String[] roles = new String[userRoles.size()];
+//        return userRoles.toArray(roles);
+
+        return null;
     }
 }

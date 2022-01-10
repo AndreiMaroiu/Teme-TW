@@ -19,7 +19,7 @@ import javax.sql.DataSource;
 public class SecurityConfig extends WebSecurityConfigurerAdapter
 {
     @Autowired UserDetailsService userDetailsService;
-    @Autowired DriverManagerDataSource dataSource;
+    //@Autowired DriverManagerDataSource dataSource;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception
@@ -37,9 +37,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception
     {
-        auth.jdbcAuthentication().dataSource(dataSource).passwordEncoder(passwordEncoder())
-                .usersByUsernameQuery("select username, password, enabled" + " from Users" + " where username=?")
-                .authoritiesByUsernameQuery("select username, authority"+ " from Authorities" + " where username=?");
+        auth.inMemoryAuthentication()
+                .withUser("achi").password(passwordEncoder().encode("pass")).roles("ADMIN", "USER")  ;
+//        auth.jdbcAuthentication().dataSource(dataSource).passwordEncoder(passwordEncoder())
+//                .usersByUsernameQuery("select username, password, enabled" + " from Users" + " where username=?")
+//                .authoritiesByUsernameQuery("select username, authority"+ " from Authorities" + " where username=?");
     }
 
     @Bean
