@@ -6,11 +6,6 @@ import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
-interface ITransactionWork
-{
-    Object doWork(Session session);
-}
-
 public class DaoHelper
 {
     public static SessionFactory sessionFactory = null;

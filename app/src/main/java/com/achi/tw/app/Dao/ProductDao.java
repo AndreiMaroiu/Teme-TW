@@ -8,12 +8,8 @@ public class ProductDao
 {
     public static ArrayList<Product> getProducts()
     {
-        ArrayList<Product> result = null;
-
-        result = (ArrayList<Product>)DaoHelper.doTransaction(session ->
-            session.createQuery("from Product ", Product.class).list()
+        return (ArrayList<Product>)DaoHelper.doTransaction(session ->
+                session.createQuery("from Product ", Product.class).list()
         );
-
-        return result;
     }
 }

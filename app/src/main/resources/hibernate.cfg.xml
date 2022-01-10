@@ -19,5 +19,6 @@
 
         <!-- Names the annotated entity class -->
         <mapping class="com.achi.tw.app.Entity.Product"/>
+        <mapping class="com.achi.tw.app.Entity.User"/>
     </session-factory>
 </hibernate-configuration>
