@@ -20,12 +20,12 @@ public class Role {
     @Column(name = "name")
     private String name;
 
-    @ManyToMany(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "user_role",
-            joinColumns = { @JoinColumn(name = "user_id") },
-            inverseJoinColumns = { @JoinColumn(name = "role_id") }
-    )
+    @ManyToMany(mappedBy = "roles", cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
+//    @JoinTable(
+//            name = "user_role",
+//            joinColumns = { @JoinColumn(name = "user_id") },
+//            inverseJoinColumns = { @JoinColumn(name = "role_id") }
+//    )
     private List<User> users;
 }
 
