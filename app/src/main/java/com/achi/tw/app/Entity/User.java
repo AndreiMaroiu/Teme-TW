@@ -37,6 +37,9 @@ public class User {
     @Column(name = "role")
     private String role;
 
+    @ManyToMany(mappedBy = "users", fetch = FetchType.EAGER)
+    private List<Role> roles;
+
 //    @ManyToMany(cascade = {CascadeType.ALL})
 //    @JoinTable(name = "user_role",
 //            joinColumns = @JoinColumn(name = "user_id"),
