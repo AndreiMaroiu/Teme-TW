@@ -12,13 +12,13 @@
     <div>
         <h1 class="text-center">Sign Up</h1>
 
-        <form method="post">
+        <form method="post" th:action="@{/submit}" th:object="${newUser}">
             <table class="table">
                 <tr>
                     <td class="align-middle">Name:</td>
                     <td>
                         <label>
-                            <input type="text" placeholder="Name" class="form-control"/>
+                            <input type="text" placeholder="Name" class="form-control" th:field="*{username}"/>
                         </label>
                     </td>
                 </tr>
@@ -26,7 +26,7 @@
                     <td class="align-middle">Password:</td>
                     <td>
                         <label>
-                            <input type="password" placeholder="Password" class="form-control"/>
+                            <input type="password" placeholder="Password" class="form-control" th:field="*{password}"/>
                         </label>
                     </td>
                 </tr>
@@ -34,7 +34,7 @@
                     <td class="align-middle">Confirm password:</td>
                     <td>
                         <label>
-                            <input type="password" placeholder="Password" class="form-control"/>
+                            <input type="password" placeholder="Password" class="form-control" th:field="*{confirmedPassword}"/>
                         </label>
                     </td>
                 </tr>

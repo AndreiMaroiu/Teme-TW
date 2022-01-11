@@ -1,69 +1,27 @@
 package com.achi.tw.app.Services;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.achi.tw.app.Dao.DaoHelper;
-import com.achi.tw.app.Entity.*;
+import com.achi.tw.app.Entity.User;
+import com.achi.tw.app.Repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
 
-@Service
 public class UserDetailsServiceImpl implements UserDetailsService
 {
-    private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    @Autowired
+    private UserRepository userRepository;
 
     @Override
-    public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException
     {
-        List<User> users = (List<User>)DaoHelper.doTransaction(service -> service.createQuery("from User", User.class).list());
-        User user = null;
+        User user = userRepository.getUserByUsername(username);
 
-        for (var entity : users)
+        if (user == null)
         {
-            if (entity.getUsername().equals(userName))
-            {
-                user = entity;
-                break;
-            }
+            throw new UsernameNotFoundException("Could not find user");
         }
 
-        if (user != null)
-        {
-            List<String> roleList = new ArrayList<String>();
-//            for (Role role : user.getRoles())
-//            {
-//                roleList.add(role.getRoleName());
-//            }
-
-            return org.springframework.security.core.userdetails.User.builder()
-                    .username(user.getUsername())
-                    .password(passwordEncoder.encode(user.getPassword()))
-                    .disabled(user.isDisabled())
-                    .accountExpired(user.isAccountExpired())
-                    .accountLocked(user.isAccountLocked())
-                    .credentialsExpired(user.isCredentialsExpired())
-                    .roles(getRoles(user))
-                    .build();
-        }
-        else
-        {
-            throw new UsernameNotFoundException("User Name is not Found");
-        }
-    }
-
-    String[] getRoles(User user)
-    {
-//        List<Role> userRoles = user.getRoles();
-//        String[] roles = new String[userRoles.size()];
-//        return userRoles.toArray(roles);
-
-        return null;
+        return new MyUserDetails(user);
     }
 }

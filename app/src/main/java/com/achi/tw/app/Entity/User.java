@@ -12,6 +12,7 @@ import java.util.List;
 @Entity
 public class User {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id", nullable = false)
     private Integer id;
 
@@ -33,10 +34,13 @@ public class User {
     @Column(name = "credentials_expired")
     private boolean credentialsExpired;
 
-    @ManyToMany(cascade = {CascadeType.ALL})
-    @JoinTable(name = "user_role",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id"))
-    List<Role> roles;
+    @Column(name = "role")
+    private String role;
+
+//    @ManyToMany(cascade = {CascadeType.ALL})
+//    @JoinTable(name = "user_role",
+//            joinColumns = @JoinColumn(name = "user_id"),
+//            inverseJoinColumns = @JoinColumn(name = "role_id"))
+//    List<Role> roles;
 
 }
