@@ -12,6 +12,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import javax.sql.DataSource;
 
@@ -54,9 +56,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
                 .antMatchers("/").hasAnyRole("USER", "ADMIN")
                 .antMatchers("/signUp").permitAll()
                 .antMatchers("/submit").permitAll()
+                .antMatchers("/login**").permitAll()
                 .anyRequest().authenticated()
-                .and().formLogin().permitAll()
                 .and()
-                .formLogin().loginPage("/login").permitAll().defaultSuccessUrl("/home");
+                .formLogin().loginPage("/login").permitAll().defaultSuccessUrl("/home", true)
+                .failureUrl("/login")
+                .passwordParameter("password")
+                .usernameParameter("username");
     }
 }
