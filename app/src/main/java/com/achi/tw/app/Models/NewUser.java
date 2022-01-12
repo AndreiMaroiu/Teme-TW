@@ -10,4 +10,5 @@ public class NewUser
     private String username;
     private String password;
     private String confirmedPassword;
+    private String role;
 }

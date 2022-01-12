@@ -1,7 +1,9 @@
 package com.achi.tw.app.Controllers;
 
 import com.achi.tw.app.Entity.User;
+import com.achi.tw.app.Entity.Role;
 import com.achi.tw.app.Models.NewUser;
+import com.achi.tw.app.Repositories.RoleRepository;
 import com.achi.tw.app.Repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -12,6 +14,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
+
 @RestController
 public class SignUpController
 {
@@ -21,10 +25,14 @@ public class SignUpController
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private RoleRepository roleRepository;
+
     @GetMapping("/signUp")
     public ModelAndView signUp(Model model)
     {
         model.addAttribute("newUser", new NewUser());
+        model.addAttribute("roles", roleRepository.findAll());
 
         return new ModelAndView("signUp");
     }
@@ -39,7 +47,10 @@ public class SignUpController
             user.setUsername(newUser.getUsername());
             user.setPassword(passwordEncoder.encode(newUser.getConfirmedPassword()));
             user.setDisabled(false);
-            user.setRole("USER");
+            Role role = roleRepository.getRoleByName(newUser.getRole());
+            var roles= new ArrayList<Role>();
+            roles.add(role);
+            user.setRoles(roles);
 
             userRepository.save(user);
 

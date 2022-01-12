@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -36,6 +37,15 @@
                         <label>
                             <input type="password" placeholder="Password" class="form-control" th:field="*{confirmedPassword}"/>
                         </label>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="align-middle">Choose role:</td>
+                    <td>
+                        <select th:field="*{role}">
+                            <option th:each="r : ${roles}" th:value="${r.name}" th:text="${r.name}">
+                            </option>
+                        </select>
                     </td>
                 </tr>
             </table>
