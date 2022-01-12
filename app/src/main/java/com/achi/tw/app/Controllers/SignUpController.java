@@ -19,14 +19,16 @@ import java.util.ArrayList;
 @RestController
 public class SignUpController
 {
-    @Autowired
-    BCryptPasswordEncoder passwordEncoder;
+    private final BCryptPasswordEncoder passwordEncoder;
+    private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
 
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private RoleRepository roleRepository;
+    public SignUpController(BCryptPasswordEncoder passwordEncoder, UserRepository userRepository, RoleRepository roleRepository)
+    {
+        this.passwordEncoder = passwordEncoder;
+        this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
+    }
 
     @GetMapping("/signUp")
     public ModelAndView signUp(Model model)
