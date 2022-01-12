@@ -1,7 +1,9 @@
 package com.achi.tw.app.Services;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 import com.achi.tw.app.Entity.User;
 import org.springframework.security.core.GrantedAuthority;
@@ -20,9 +22,14 @@ public class MyUserDetails implements UserDetails
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities()
     {
-        String role = user.getRoles().get(0).getName();
-        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(role);
-        return Arrays.asList(authority);
+        List<SimpleGrantedAuthority> authorityList = new ArrayList<>();
+
+        for (var role : user.getRoles())
+        {
+            authorityList.add(new SimpleGrantedAuthority(role.getName()));
+        }
+
+        return authorityList;
     }
 
     @Override

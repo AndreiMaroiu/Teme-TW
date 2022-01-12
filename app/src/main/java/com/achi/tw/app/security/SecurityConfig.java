@@ -1,7 +1,6 @@
 package com.achi.tw.app.security;
 
 import com.achi.tw.app.Services.UserDetailsServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -11,11 +10,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-
-import javax.sql.DataSource;
 
 @Configuration
 @EnableWebSecurity
@@ -31,6 +25,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
     public BCryptPasswordEncoder passwordEncoder()
     {
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean AuthSuccessHandler authSuccessHandler()
+    {
+        return new AuthSuccessHandler();
     }
 
     public DaoAuthenticationProvider authenticationProvider()
@@ -53,13 +52,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
     {
         http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/").hasAnyRole("USER", "ADMIN")
+                .antMatchers("/").hasAnyAuthority("USER", "ADMIN")
                 .antMatchers("/signUp").permitAll()
                 .antMatchers("/submit").permitAll()
                 .antMatchers("/login**").permitAll()
+                .antMatchers("/producer").hasAuthority("PRODUCER")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin().loginPage("/login").permitAll().defaultSuccessUrl("/home", true)
+                .successHandler(authSuccessHandler())
                 .failureUrl("/login?error=true")
                 .passwordParameter("password")
                 .usernameParameter("username");

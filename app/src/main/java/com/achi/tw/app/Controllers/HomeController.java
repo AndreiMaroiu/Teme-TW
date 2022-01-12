@@ -44,4 +44,25 @@ public class HomeController
         mav.setViewName("myForm");
         return mav;
     }
+
+    @GetMapping("/producer")
+    public ModelAndView producer(Model model)
+    {
+        ModelAndView mav = new ModelAndView("producer");
+        return mav;
+    }
+
+    @GetMapping("/trader")
+    public ModelAndView trader(Model model)
+    {
+        ModelAndView mav = new ModelAndView("trader");
+        return mav;
+    }
+
+    @GetMapping("/buyer")
+    public ModelAndView buyer(Model model)
+    {
+        ModelAndView mav = new ModelAndView("buyer");
+        return mav;
+    }
 }
