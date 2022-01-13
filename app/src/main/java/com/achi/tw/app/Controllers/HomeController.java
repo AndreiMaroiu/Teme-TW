@@ -1,7 +1,6 @@
 package com.achi.tw.app.Controllers;
 
 
-import com.achi.tw.app.Dao.ProductDao;
 import com.achi.tw.app.Repositories.ProductRepository;
 import com.achi.tw.app.Repositories.StockRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,5 +63,11 @@ public class HomeController
     {
         ModelAndView mav = new ModelAndView("buyer");
         return mav;
+    }
+
+    @GetMapping("/accessDenied")
+    public ModelAndView accessDenied()
+    {
+        return new ModelAndView("accessDenied");
     }
 }

@@ -53,16 +53,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
         http.csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/").hasAnyAuthority("USER", "ADMIN")
+                .antMatchers("/home").hasAnyAuthority("USER", "ADMIN")
                 .antMatchers("/signUp").permitAll()
                 .antMatchers("/submit").permitAll()
                 .antMatchers("/login**").permitAll()
-                .antMatchers("/producer").hasAuthority("PRODUCER")
+                .antMatchers("/producer").hasAnyAuthority("PRODUCER", "ADMIN")
+                .antMatchers("/trader").hasAnyAuthority("TRADER", "ADMIN")
+                .antMatchers("/buyer").hasAnyAuthority("BUYER", "ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin().loginPage("/login").permitAll().defaultSuccessUrl("/home", true)
                 .successHandler(authSuccessHandler())
                 .failureUrl("/login?error=true")
                 .passwordParameter("password")
-                .usernameParameter("username");
+                .usernameParameter("username")
+                .and()
+                .exceptionHandling().accessDeniedPage("/accessDenied");
     }
 }
