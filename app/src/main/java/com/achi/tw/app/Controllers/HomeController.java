@@ -44,14 +44,6 @@ public class HomeController
         return mav;
     }
 
-
-    @GetMapping("/trader")
-    public ModelAndView trader(Model model)
-    {
-        ModelAndView mav = new ModelAndView("trader");
-        return mav;
-    }
-
     @GetMapping("/buyer")
     public ModelAndView buyer(Model model)
     {

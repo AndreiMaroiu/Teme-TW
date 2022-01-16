@@ -32,7 +32,7 @@ CREATE TABLE `user` (
   `credentials_expired` tinyint(1) DEFAULT '0',
   PRIMARY KEY (`user_id`),
   UNIQUE KEY `username` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -41,7 +41,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'user','$2a$10$yeMPlReKiIhHNZFwKxEhIu4AOywxFr7Sh6XwV3/liEmTxd6cCsXLe',0,0,0,0),(2,'andrei','$2a$10$hFUwqM9GyOHIK.kq/Qz02uFRXa0UMzRtfdbs4m6U3nUnRykKH6lu.',0,0,0,0),(3,'norbert','$2a$10$06b3/GXFznRQEsojqCmddeqgRZ4qO95FY65LDAs/AO8.Hh76vnNgK',0,0,0,0),(5,'producer','$2a$10$NwbAv9NpPoyZZdUODLI4hOn5PUK0SsRFbXbbWRYlSQvI3yn7oD9GS',0,0,0,0);
+INSERT INTO `user` VALUES (1,'user','$2a$10$yeMPlReKiIhHNZFwKxEhIu4AOywxFr7Sh6XwV3/liEmTxd6cCsXLe',0,0,0,0),(2,'andrei','$2a$10$hFUwqM9GyOHIK.kq/Qz02uFRXa0UMzRtfdbs4m6U3nUnRykKH6lu.',0,0,0,0),(3,'norbert','$2a$10$06b3/GXFznRQEsojqCmddeqgRZ4qO95FY65LDAs/AO8.Hh76vnNgK',0,0,0,0),(5,'producer','$2a$10$NwbAv9NpPoyZZdUODLI4hOn5PUK0SsRFbXbbWRYlSQvI3yn7oD9GS',0,0,0,0),(6,'trader','$2a$10$7pS2c.NkWwQG3dNpB3s3B.XYD9.4bYxhr7mvOta0Jlc5mTZMI9aGG',0,0,0,0);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -54,4 +54,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-01-16 14:53:34
+-- Dump completed on 2022-01-16 16:45:54
