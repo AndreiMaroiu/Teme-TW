@@ -1,12 +1,9 @@
 package com.achi.tw.app.Controllers;
 
 
-import com.achi.tw.app.Entity.User;
 import com.achi.tw.app.Repositories.ProductRepository;
-import com.achi.tw.app.Repositories.StockRepository;
-import com.achi.tw.app.Services.MyUserDetails;
+import com.achi.tw.app.Repositories.ProducerStockRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -14,11 +11,11 @@ import org.springframework.web.servlet.ModelAndView;
 @RestController
 public class HomeController
 {
-    private final StockRepository stockRepository;
+    private final ProducerStockRepository stockRepository;
     private final ProductRepository productRepository;
 
     @Autowired
-    public HomeController(StockRepository stockRepository, ProductRepository productRepository)
+    public HomeController(ProducerStockRepository stockRepository, ProductRepository productRepository)
     {
         this.stockRepository = stockRepository;
         this.productRepository = productRepository;

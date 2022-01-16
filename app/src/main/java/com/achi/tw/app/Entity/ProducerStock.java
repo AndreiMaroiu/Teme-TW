@@ -7,8 +7,8 @@ import javax.persistence.*;
 
 @Getter
 @Setter
-@Entity(name = "producer_stock")
-public class Stock
+@Entity
+public class ProducerStock
 {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
