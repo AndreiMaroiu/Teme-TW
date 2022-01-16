@@ -1,9 +1,12 @@
 package com.achi.tw.app.Controllers;
 
 
+import com.achi.tw.app.Entity.User;
 import com.achi.tw.app.Repositories.ProductRepository;
 import com.achi.tw.app.Repositories.StockRepository;
+import com.achi.tw.app.Services.MyUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -44,12 +47,6 @@ public class HomeController
         return mav;
     }
 
-    @GetMapping("/producer")
-    public ModelAndView producer(Model model)
-    {
-        ModelAndView mav = new ModelAndView("producer");
-        return mav;
-    }
 
     @GetMapping("/trader")
     public ModelAndView trader(Model model)

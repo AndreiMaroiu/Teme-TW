@@ -7,7 +7,7 @@ import javax.persistence.*;
 
 @Getter
 @Setter
-@Entity
+@Entity(name = "producer_stock")
 public class Stock
 {
     @Id
@@ -19,15 +19,7 @@ public class Stock
     @JoinColumn(name="product_id", referencedColumnName = "id")
     private Product product;
 
-    private Integer amount;
-
-    public String getAmountString()
-    {
-        if (amount == null)
-        {
-            return "Unlimited";
-        }
-
-        return amount.toString();
-    }
+    @OneToOne
+    @JoinColumn(name = "producer_id", referencedColumnName = "user_id")
+    private User producer;
 }

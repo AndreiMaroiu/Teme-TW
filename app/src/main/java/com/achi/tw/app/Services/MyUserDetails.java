@@ -6,12 +6,14 @@ import java.util.Collection;
 import java.util.List;
 
 import com.achi.tw.app.Entity.User;
+import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 public class MyUserDetails implements UserDetails
 {
+    @Getter
     private User user;
 
     public MyUserDetails(User user)
