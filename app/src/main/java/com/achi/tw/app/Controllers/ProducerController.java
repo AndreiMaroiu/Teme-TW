@@ -51,18 +51,14 @@ public class ProducerController
     }
 
     @PostMapping("/addStock")
-    public ModelAndView addStock(@RequestParam(name = "product") Integer productId)
+    public ModelAndView addStock(@RequestParam(name = "name") String name, @RequestParam Float price)
     {
         try
         {
-            if (stockRepository.getStockByUserAndProduct(getUser().getId(), productId) != null)
-            {
-                throw new Exception("stock with requested product already exists!");
-            }
-
             ProducerStock producerStock = new ProducerStock();
 
-            producerStock.setProduct(productRepository.getProductById(productId));
+            producerStock.setName(name);
+            producerStock.setPrice(price);
             producerStock.setProducer(getUser());
 
             stockRepository.save(producerStock);

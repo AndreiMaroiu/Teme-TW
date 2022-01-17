@@ -10,7 +10,4 @@ public interface ProducerStockRepository extends CrudRepository<ProducerStock, I
 {
     @Query("SELECT s FROM ProducerStock s WHERE s.producer.id = :id")
     List<ProducerStock> getStocksByUser(@Param("id") Integer id);
-
-    @Query("SELECT s FROM ProducerStock s WHERE s.producer.id = :producerId and s.product.id = :productId")
-    ProducerStock getStockByUserAndProduct(@Param("producerId") Integer producerId, @Param("productId") Integer productId);
 }

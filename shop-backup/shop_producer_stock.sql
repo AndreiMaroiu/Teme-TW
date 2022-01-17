@@ -24,14 +24,13 @@ DROP TABLE IF EXISTS `producer_stock`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `producer_stock` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `product_id` int NOT NULL,
   `producer_id` int NOT NULL,
+  `product_name` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `price` float NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `product_id` (`product_id`),
   KEY `producer_id` (`producer_id`),
-  CONSTRAINT `producer_id` FOREIGN KEY (`producer_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `product_id` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  CONSTRAINT `producer_id` FOREIGN KEY (`producer_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -40,7 +39,7 @@ CREATE TABLE `producer_stock` (
 
 LOCK TABLES `producer_stock` WRITE;
 /*!40000 ALTER TABLE `producer_stock` DISABLE KEYS */;
-INSERT INTO `producer_stock` VALUES (1,1,1),(2,3,5),(3,2,5);
+INSERT INTO `producer_stock` VALUES (1,1,'Coffee',1),(2,5,'Kurtos',10),(3,5,'Tea',5),(4,5,'TV',1000);
 /*!40000 ALTER TABLE `producer_stock` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -53,4 +52,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-01-16 16:45:54
+-- Dump completed on 2022-01-17 21:06:16

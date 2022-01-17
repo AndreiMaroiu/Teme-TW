@@ -15,9 +15,11 @@ public class ProducerStock
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @OneToOne
-    @JoinColumn(name="product_id", referencedColumnName = "id")
-    private Product product;
+    @Column(name = "product_name")
+    private String name;
+
+    @Column(name = "price")
+    private Float price;
 
     @OneToOne
     @JoinColumn(name = "producer_id", referencedColumnName = "user_id")
