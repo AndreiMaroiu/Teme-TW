@@ -1,8 +1,7 @@
 package com.achi.tw.app;
 
-import com.achi.tw.app.Repositories.RoleRepository;
-import com.achi.tw.app.Repositories.ProducerStockRepository;
-import com.achi.tw.app.Repositories.UserRepository;
+import com.achi.tw.app.Dao.ProductDao;
+import com.achi.tw.app.Dao.TraderStockDao;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -11,13 +10,10 @@ public class AppApplication
 {
     public static void main(String[] args)
     {
-        var configApp = SpringApplication.run(AppApplication.class, args);;
-        RoleRepository roleRepository = configApp.getBean(RoleRepository.class);
-        UserRepository userRepository = configApp.getBean(UserRepository.class);
-        ProducerStockRepository stockRepository = configApp.getBean(ProducerStockRepository.class);
+        SpringApplication.run(AppApplication.class, args);
 
-        var stocks = stockRepository.findAll();
-        for (var stock : stocks)
+        // just for testing
+        for (var stock : TraderStockDao.findAll())
         {
             System.out.println(stock);
         }

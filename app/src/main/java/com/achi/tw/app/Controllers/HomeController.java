@@ -44,12 +44,7 @@ public class HomeController
         return mav;
     }
 
-    @GetMapping("/buyer")
-    public ModelAndView buyer(Model model)
-    {
-        ModelAndView mav = new ModelAndView("buyer");
-        return mav;
-    }
+
 
     @GetMapping("/accessDenied")
     public ModelAndView accessDenied()

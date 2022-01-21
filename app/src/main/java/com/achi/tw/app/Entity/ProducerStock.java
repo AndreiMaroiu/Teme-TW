@@ -8,12 +8,13 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Entity
+@Table(name = "producer_stock")
 public class ProducerStock
 {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    private Long id;
+    private int id;
 
     @Column(name = "product_name")
     private String name;

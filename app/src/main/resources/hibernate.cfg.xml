@@ -22,5 +22,6 @@
         <mapping class="com.achi.tw.app.Entity.User"/>
         <mapping class="com.achi.tw.app.Entity.Role"/>
         <mapping class="com.achi.tw.app.Entity.ProducerStock"/>
+        <mapping class="com.achi.tw.app.Entity.TraderStock" />
     </session-factory>
 </hibernate-configuration>
