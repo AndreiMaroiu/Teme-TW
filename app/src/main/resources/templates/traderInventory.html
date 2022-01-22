@@ -17,18 +17,20 @@
 <table class="table">
     <thead>
         <tr>
-            <td>
-                Product Name
-            </td>
-            <td>
-                Product Price
-            </td>
+            <td>Product Name</td>
+            <td>Product Price</td>
+            <td>Current Stock</td>
+            <td>Min Stock</td>
+            <td>Max Stock</td>
         </tr>
     </thead>
     <tbody>
         <tr th:each="stock : ${stocks}">
             <td th:text="${stock.name}"></td>
             <td th:text="${stock.price}"></td>
+            <td th:text="${stock.amount}"></td>
+            <td th:text="${stock.minStock}"></td>
+            <td th:text="${stock.maxStock}"></td>
         </tr>
     </tbody>
 </table>

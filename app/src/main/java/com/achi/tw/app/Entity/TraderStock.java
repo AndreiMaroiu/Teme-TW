@@ -22,7 +22,13 @@ public class TraderStock
     @Column
     private float price;
 
-    @Column
+    @Column(name = "min_stock")
+    private int minStock;
+
+    @Column(name = "max_stock")
+    private int maxStock;
+
+    @Column(name = "current_stock")
     private int amount;
 
     @OneToOne
