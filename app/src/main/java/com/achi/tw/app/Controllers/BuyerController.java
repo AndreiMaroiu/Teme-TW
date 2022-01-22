@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
@@ -29,10 +30,34 @@ public class BuyerController
         this.historyRepository = historyRepository;
     }
 
-    @GetMapping("/buyer")
-    public ModelAndView buyer(Model model)
+    private static boolean isNullOrEmpty(String str)
     {
-        model.addAttribute("stocks", stockRepository.findAll());
+        return str == null || str.trim().length() == 0;
+    }
+
+    @GetMapping("/buyer")
+    public ModelAndView buyer(Model model, @RequestParam(required = false) String name, @RequestParam(required = false) Float maxPrice)
+    {
+        Iterable<TraderStock> stocks = null;
+        if (!isNullOrEmpty(name) && maxPrice != null)
+        {
+            stocks = stockRepository.findAllByNameAndPrice(maxPrice, name);
+        }
+        else if (!isNullOrEmpty(name))
+        {
+            stocks = stockRepository.findStocksByProductName(name);
+        }
+        else if (maxPrice != null)
+        {
+            stocks = stockRepository.findAllByPrice(maxPrice);
+        }
+        else
+        {
+            stocks = stockRepository.findAll();
+        }
+
+        model.addAttribute("stocks", stocks);
+
         return new ModelAndView("buyer");
     }
 
@@ -44,31 +69,64 @@ public class BuyerController
         return new ModelAndView("buyerHistory");
     }
 
-    @GetMapping("/buyer/buy")
-    public ModelAndView buy(@RequestParam(name = "id") int id)
+    @GetMapping("/buyer/checkout")
+    public ModelAndView checkout(Model model, @RequestParam Integer id)
     {
-        TraderStock stock = stockRepository.getStockById(id);
+        TraderStock stock = stockRepository.findById(id).get();
+        model.addAttribute("stock", stock);
+        return new ModelAndView("buyerCheckout");
+    }
 
-        // TODO: buy from stock
+    @GetMapping("/buyer/confirm")
+    private ModelAndView confirm(Model model, @RequestParam(required = false) Boolean insufficientStocks,
+                                 @RequestParam(required = false) Integer stockId)
+    {
+        model.addAttribute("stockId", stockId);
+        return new ModelAndView("buyerConfirm");
+    }
 
-        if (stock.getAmount() > 0)
+    @PostMapping("/buyer/buyRemaining")
+    public ModelAndView buyRemaningStock(@RequestParam Integer stockId)
+    {
+        var stock = stockRepository.findById(stockId);
+        doBuy(stockId, stock.get().getAmount());
+        return new ModelAndView("redirect:/buyer/confirm");
+    }
+
+    @PostMapping("/buyer/buy")
+    public ModelAndView buy(@RequestParam Integer stockId, @RequestParam Integer quantity)
+    {
+        TraderStock stock = stockRepository.getStockById(stockId);
+
+        if (stock.getAmount() >= quantity)
         {
-            stock.buyFromStock();
-            stockRepository.save(stock);
-
-            // TODO: add to history
-
-            BuyerHistory history = new BuyerHistory();
-            history.setProductName(stock.getName());
-            history.setTrader(stock.getTrader());
-            history.setBuyer(getUser());
-            history.setDate(new Date());
-            history.setAmount(1);
-            history.setProductPrice(stock.getPrice());
-            historyRepository.save(history);
+            doBuy(stockId, quantity);
+            return new ModelAndView("redirect:/buyer/confirm");
         }
+        else
+        {
+            // TODO: redirect to confirm
+            return new ModelAndView("redirect:/buyer/confirm?insufficientStocks=true&stockId=" + stockId);
+        }
+    }
 
-        return new ModelAndView("redirect:/buyer");
+    private void doBuy(Integer stockId, Integer quantity)
+    {
+        TraderStock stock = stockRepository.getStockById(stockId);
+
+        stock.buyFromStock(quantity);
+        stockRepository.save(stock);
+
+        // TODO: add to history
+
+        BuyerHistory history = new BuyerHistory();
+        history.setProductName(stock.getName());
+        history.setTrader(stock.getTrader());
+        history.setBuyer(getUser());
+        history.setDate(new Date());
+        history.setAmount(quantity);
+        history.setProductPrice(stock.getPrice());
+        historyRepository.save(history);
     }
 
     private User getUser()

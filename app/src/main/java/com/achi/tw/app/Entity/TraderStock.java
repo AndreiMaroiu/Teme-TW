@@ -35,8 +35,8 @@ public class TraderStock
     @JoinColumn(name = "trader_id", referencedColumnName = "user_id")
     private User trader;
 
-    public void buyFromStock()
+    public void buyFromStock(Integer howMuch)
     {
-        amount -= 1;
+        amount -= howMuch;
     }
 }
