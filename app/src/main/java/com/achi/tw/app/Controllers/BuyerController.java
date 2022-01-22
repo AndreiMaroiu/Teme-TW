@@ -64,7 +64,6 @@ public class BuyerController
     @GetMapping("/buyer/history")
     public ModelAndView history(Model model)
     {
-        
         model.addAttribute("commands", historyRepository.findAllByBuyer(getUser().getId()));
         return new ModelAndView("buyerHistory");
     }

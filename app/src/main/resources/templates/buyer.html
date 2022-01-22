@@ -13,14 +13,20 @@
 <h1>Buyer</h1>
 
 <form method="get" action="/buyer">
-    <div class="col-lg-2">
-        <input type="text" name="name" class="form-control" placeholder="Product name" th:value="${param.name}"/>
-    </div>
-    <div class="col-lg-2">
-        <input type="number" name="maxPrice" class="form-control" placeholder="maxPrice" th:value="${param.maxPrice}"/>
-    </div>
+    <div class="d-flex flex-row">
+        <div class="col-lg-2 mr-2">
+            <label>
+                <input type="text" name="name" class="form-control" placeholder="Product name" th:value="${param.name}"/>
+            </label>
+        </div>
+        <div class="col-lg-2 mr-2">
+            <label>
+                <input type="number" name="maxPrice" class="form-control" placeholder="maxPrice" th:value="${param.maxPrice}"/>
+            </label>
+        </div>
 
-    <input type="submit" value="Search" class="btn btn-primary"/>
+        <input type="submit" value="Search" class="btn btn-primary"/>
+    </div>
 </form>
 
 <table class="table">

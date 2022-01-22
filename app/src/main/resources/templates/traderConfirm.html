@@ -21,16 +21,16 @@
 <p>Are you sure you want to buy product:</p>
 
 <div th:if="${stock}">
-    with name: <div th:text="${stock.name}"></div>
-    with price: <div th:text="${stock.price}"></div>
+    <div th:text="'with name: ' + ${stock.name}"></div>
+    <div th:text="'with price: ' + ${stock.price}"></div>
 </div>
 
 <form method="post" action="/trader/confirm">
     <input type="number" name="stockId" th:value="${stock.id}" hidden/>
-    <input type="number" placeholder="Addon" name="sellingPrice" class="form-control"/>
-    <input type="number" placeholder="Minimum stock" name="min" class="form-control"/>
-    <input type="number" placeholder="Minimum stock" name="max" class="form-control"/>
-    <input type="submit" value="Buy" class="btn btn-primary"/>
+    <input type="number" placeholder="Addon" name="sellingPrice" class="form-control mt-2"/>
+    <input type="number" placeholder="Minimum stock" name="min" class="form-control mt-2"/>
+    <input type="number" placeholder="Minimum stock" name="max" class="form-control mt-2"/>
+    <input type="submit" value="Buy" class="btn btn-primary mt-2"/>
 </form>
 </body>
 </html>
