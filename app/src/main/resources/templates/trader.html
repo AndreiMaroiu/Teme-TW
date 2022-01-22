@@ -10,41 +10,42 @@
 
 <nav th:insert="fragments/traderNavBar.html :: nav"></nav>
 
+<div class="px-xxl-5 mt-xxl-5">
+    <h1>Trader</h1>
 
-<h1>Trader</h1>
-
-<form method="post" action="/findByName">
-    <input type="text" name="name" placeholder="Product Name">
-    <input type="submit" value="Search">
-</form>
-
-<div th:if="${name}">
-    <form method="post" action="/trader/buy">
-        <input type="text" name="name" th:value="${name}" hidden>
-        <input type="submit" value="Buy Cheapest">
+    <form method="post" action="/findByName">
+        <input type="text" name="name" placeholder="Product Name">
+        <input type="submit" value="Search">
     </form>
-</div>
 
-<div th:if="${stocks}">
-    <table class="table">
-        <thead>
+    <div th:if="${name}">
+        <form method="post" action="/trader/buy">
+            <input type="text" name="name" th:value="${name}" hidden>
+            <input type="submit" value="Buy Cheapest">
+        </form>
+    </div>
+
+    <div th:if="${stocks}">
+        <table class="table">
+            <thead>
             <tr>
                 <td>Product Name</td>
                 <td>Product Price</td>
                 <td>Producer Name</td>
             </tr>
-        </thead>
-        <tbody>
+            </thead>
+            <tbody>
             <tr th:each="stock : ${stocks}">
                 <td th:text="${stock.name}"></td>
                 <td th:text="${stock.price}"></td>
                 <td th:text="${stock.producer.username}"></td>
             </tr>
-        </tbody>
-    </table>
-</div>
-<div th:unless="${stocks}">
-    No product available!
+            </tbody>
+        </table>
+    </div>
+    <div th:unless="${stocks}">
+        No product available!
+    </div>
 </div>
 </body>
 </html>

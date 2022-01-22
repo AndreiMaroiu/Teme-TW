@@ -10,35 +10,36 @@
 
 <nav th:insert="fragments/buyerNavBar.html :: nav"></nav>
 
-<h1>Buyer</h1>
+<div class="px-xxl-5 mt-xxl-5">
+    <h1>Buyer</h1>
 
-<form method="get" action="/buyer">
-    <div class="d-flex flex-row">
-        <div class="col-lg-2 mr-2">
-            <label>
-                <input type="text" name="name" class="form-control" placeholder="Product name" th:value="${param.name}"/>
-            </label>
+    <form method="get" action="/buyer">
+        <div class="d-flex flex-row">
+            <div class="col-lg-2 mr-2">
+                <label>
+                    <input type="text" name="name" class="form-control" placeholder="Product name" th:value="${param.name}"/>
+                </label>
+            </div>
+            <div class="col-lg-2 mr-2">
+                <label>
+                    <input type="number" name="maxPrice" class="form-control" placeholder="maxPrice" th:value="${param.maxPrice}"/>
+                </label>
+            </div>
+
+            <input type="submit" value="Search" class="btn btn-primary"/>
         </div>
-        <div class="col-lg-2 mr-2">
-            <label>
-                <input type="number" name="maxPrice" class="form-control" placeholder="maxPrice" th:value="${param.maxPrice}"/>
-            </label>
-        </div>
+    </form>
 
-        <input type="submit" value="Search" class="btn btn-primary"/>
-    </div>
-</form>
-
-<table class="table">
-    <thead>
+    <table class="table">
+        <thead>
         <tr>
             <td>Product Name</td>
             <td>Product price</td>
             <td>Amount</td>
             <td>Trader Name</td>
         </tr>
-    </thead>
-    <tbody>
+        </thead>
+        <tbody>
         <tr th:each="stock : ${stocks}">
             <td th:text="${stock.name}"></td>
             <td th:text="${stock.price}"></td>
@@ -46,8 +47,8 @@
             <td th:text="${stock.trader.username}"></td>
             <td><a th:href="@{/buyer/checkout(id=${stock.id})}" class="btn btn-primary">Buy</a></td>
         </tr>
-    </tbody>
-</table>
-
+        </tbody>
+    </table>
+</div>
 </body>
 </html>

@@ -16,27 +16,34 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `role`
+-- Table structure for table `trader_stock`
 --
 
-DROP TABLE IF EXISTS `role`;
+DROP TABLE IF EXISTS `trader_stock`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `role` (
-  `role_id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(50) DEFAULT NULL,
-  PRIMARY KEY (`role_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+CREATE TABLE `trader_stock` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `product_name` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `price` float NOT NULL,
+  `trader_id` int NOT NULL,
+  `min_stock` int NOT NULL,
+  `max_stock` int NOT NULL,
+  `current_stock` int NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `trader_stock_id_uindex` (`id`),
+  CONSTRAINT `trader_id` FOREIGN KEY (`id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `role`
+-- Dumping data for table `trader_stock`
 --
 
-LOCK TABLES `role` WRITE;
-/*!40000 ALTER TABLE `role` DISABLE KEYS */;
-INSERT INTO `role` VALUES (1,'ADMIN'),(3,'PRODUCER'),(4,'TRADER'),(5,'BUYER');
-/*!40000 ALTER TABLE `role` ENABLE KEYS */;
+LOCK TABLES `trader_stock` WRITE;
+/*!40000 ALTER TABLE `trader_stock` DISABLE KEYS */;
+INSERT INTO `trader_stock` VALUES (1,'kurtos',10,6,5,0,0),(2,'Playstation 6',3000,6,7,0,0),(3,'Playstation 7',5000,6,0,0,0),(5,'Tea',6,6,5,100,0),(6,'TV',1100,6,3,10,10),(7,'PC 2',15000,9,3,20,20);
+/*!40000 ALTER TABLE `trader_stock` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
