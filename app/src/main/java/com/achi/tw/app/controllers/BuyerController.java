@@ -2,12 +2,11 @@ package com.achi.tw.app.controllers;
 
 import com.achi.tw.app.entity.BuyerHistory;
 import com.achi.tw.app.entity.TraderStock;
-import com.achi.tw.app.entity.User;
 import com.achi.tw.app.repositories.HistoryRepository;
 import com.achi.tw.app.repositories.TraderStockRepository;
-import com.achi.tw.app.services.MyUserDetails;
+import com.achi.tw.app.services.SocketsService;
+import com.achi.tw.app.utils.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,12 +19,14 @@ import java.util.Date;
 @RestController
 public class BuyerController
 {
+    private final SocketsService socketsService;
     private final TraderStockRepository stockRepository;
     private final HistoryRepository historyRepository;
 
     @Autowired
-    public BuyerController(TraderStockRepository stockRepository, HistoryRepository historyRepository)
+    public BuyerController(SocketsService socketsService, TraderStockRepository stockRepository, HistoryRepository historyRepository)
     {
+        this.socketsService = socketsService;
         this.stockRepository = stockRepository;
         this.historyRepository = historyRepository;
     }
@@ -64,7 +65,7 @@ public class BuyerController
     @GetMapping("/buyer/history")
     public ModelAndView history(Model model)
     {
-        model.addAttribute("commands", historyRepository.findAllByBuyer(getUser().getId()));
+        model.addAttribute("commands", historyRepository.findAllByBuyer(SecurityUtils.getUser().getId()));
         return new ModelAndView("buyerHistory");
     }
 
@@ -121,16 +122,17 @@ public class BuyerController
         BuyerHistory history = new BuyerHistory();
         history.setProductName(stock.getName());
         history.setTrader(stock.getTrader());
-        history.setBuyer(getUser());
+        history.setBuyer(SecurityUtils.getUser());
         history.setDate(new Date());
         history.setAmount(quantity);
         history.setProductPrice(stock.getPrice());
         historyRepository.save(history);
-    }
 
-    private User getUser()
-    {
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return ((MyUserDetails)principal).getUser();
+        if (stock.getAmount() < stock.getMinStock())
+        {
+            socketsService.notifyUser(stock.getTrader().getId(), "stock refilled!");
+            stock.setAmount(stock.getMaxStock());
+            stockRepository.save(stock);
+        }
     }
 }

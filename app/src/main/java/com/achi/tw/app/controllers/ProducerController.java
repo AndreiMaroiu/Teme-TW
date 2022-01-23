@@ -4,9 +4,8 @@ import com.achi.tw.app.entity.ProducerStock;
 import com.achi.tw.app.entity.User;
 import com.achi.tw.app.repositories.ProducerStockRepository;
 import com.achi.tw.app.repositories.ProductRepository;
-import com.achi.tw.app.services.MyUserDetails;
+import com.achi.tw.app.utils.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,7 +29,7 @@ public class ProducerController
     @GetMapping("/producer")
     public ModelAndView main(Model model)
     {
-        User user = getUser();
+        User user = SecurityUtils.getUser();
 
         model.addAttribute("username", user.getUsername());
         model.addAttribute("stocks", stockRepository.getStocksByUser(user.getId()));
@@ -41,7 +40,7 @@ public class ProducerController
     @GetMapping("/newStock")
     public ModelAndView newStock(Model model)
     {
-        User user = getUser();
+        User user = SecurityUtils.getUser();
 
         model.addAttribute("products", productRepository.findAll());
         model.addAttribute("stocks", stockRepository.getStocksByUser(user.getId()));
@@ -58,7 +57,7 @@ public class ProducerController
 
             producerStock.setName(name);
             producerStock.setPrice(price);
-            producerStock.setProducer(getUser());
+            producerStock.setProducer(SecurityUtils.getUser());
 
             stockRepository.save(producerStock);
 
@@ -68,11 +67,5 @@ public class ProducerController
         {
             return new ModelAndView("redirect:/newStock?error=" + e.getMessage());
         }
-    }
-
-    private User getUser()
-    {
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return ((MyUserDetails)principal).getUser();
     }
 }

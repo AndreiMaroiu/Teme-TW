@@ -3,10 +3,6 @@ var notificationCount = 0;
 
 $(document).ready(function() {
     connect();
-
-    $("#myButton").click(function() {
-        sendMessage();
-    });
 });
 
 function connect() {

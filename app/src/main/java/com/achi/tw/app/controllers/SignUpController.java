@@ -49,7 +49,7 @@ public class SignUpController
             user.setPassword(passwordEncoder.encode(newUser.getConfirmedPassword()));
             user.setDisabled(false);
             Role role = roleRepository.getRoleByName(newUser.getRole());
-            var roles= new ArrayList<Role>();
+            var roles = new ArrayList<Role>();
             roles.add(role);
             user.setRoles(roles);
 

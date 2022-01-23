@@ -1,7 +1,7 @@
 package com.achi.tw.app.controllers;
 
 import com.achi.tw.app.dto.Message;
-import com.achi.tw.app.services.WsService;
+import com.achi.tw.app.services.SocketsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class WebsocketController
 {
-    private final WsService service;
+    private final SocketsService service;
 
     @Autowired
-    public WebsocketController(WsService service)
+    public WebsocketController(SocketsService service)
     {
         this.service = service;
     }
