@@ -18,10 +18,10 @@
         <property name="hbm2ddl.auto">validate</property>
 
         <!-- Names the annotated entity class -->
-        <mapping class="com.achi.tw.app.Entity.Product"/>
-        <mapping class="com.achi.tw.app.Entity.User"/>
-        <mapping class="com.achi.tw.app.Entity.Role"/>
-        <mapping class="com.achi.tw.app.Entity.ProducerStock"/>
-        <mapping class="com.achi.tw.app.Entity.TraderStock" />
+        <mapping class="com.achi.tw.app.entity.Product"/>
+        <mapping class="com.achi.tw.app.entity.User"/>
+        <mapping class="com.achi.tw.app.entity.Role"/>
+        <mapping class="com.achi.tw.app.entity.ProducerStock"/>
+        <mapping class="com.achi.tw.app.entity.TraderStock" />
     </session-factory>
 </hibernate-configuration>

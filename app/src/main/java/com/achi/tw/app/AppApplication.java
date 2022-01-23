@@ -1,7 +1,6 @@
 package com.achi.tw.app;
 
-import com.achi.tw.app.Dao.ProductDao;
-import com.achi.tw.app.Dao.TraderStockDao;
+import com.achi.tw.app.dao.TraderStockDao;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 

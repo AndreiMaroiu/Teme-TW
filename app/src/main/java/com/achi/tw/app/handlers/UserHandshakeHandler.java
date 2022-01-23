@@ -1,7 +1,7 @@
 package com.achi.tw.app.handlers;
 
-import com.achi.tw.app.Entity.User;
-import com.achi.tw.app.Services.MyUserDetails;
+import com.achi.tw.app.entity.User;
+import com.achi.tw.app.services.MyUserDetails;
 import com.sun.security.auth.UserPrincipal;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
