@@ -18,6 +18,10 @@ function connect() {
         stompClient.subscribe('/topic/messages', function (message) {
             showMessage(JSON.parse(message.body).content);
         });
+
+        stompClient.subscribe('/user/topic/private-messages', function (message) {
+            showMessage(JSON.parse(message.body).content);
+        });
     });
 }
 
@@ -28,4 +32,9 @@ function showMessage(message) {
 function sendMessage() {
     console.log("sending message");
     stompClient.send("/ws/message", {}, JSON.stringify({'content': 'hello!'}));
+}
+
+function sendPrivateMessage() {
+    console.log("sending private message");
+    stompClient.send("/ws/private-message", {}, JSON.stringify({'content': 'hello!'}));
 }

@@ -62,6 +62,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
                 .antMatchers("/buyer", "/buyer/**", "/buyer**").hasAnyAuthority("BUYER", "ADMIN")
                 .antMatchers("/producer/**").hasAnyRole("PRODUCER", "ADMIN")
                 .antMatchers("/send-message").permitAll()
+                .antMatchers("/send-private-message/**").permitAll()
+                .antMatchers("/send-private-message**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin().loginPage("/login").permitAll().defaultSuccessUrl("/home", true)
