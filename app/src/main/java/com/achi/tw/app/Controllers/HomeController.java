@@ -30,10 +30,9 @@ public class HomeController
     @GetMapping({"/", "/home"})
     public ModelAndView hello(Model model)
     {
-        ModelAndView mav = new ModelAndView("home");
         model.addAttribute("products", productRepository.findAll());
         model.addAttribute("stocks", stockRepository.findAll());
-        return mav;
+        return new ModelAndView("home");
     }
 
     @GetMapping("/form")

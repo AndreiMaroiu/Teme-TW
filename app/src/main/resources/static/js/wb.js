@@ -1,7 +1,31 @@
+var stompClient = null;
+var notificationCount = 0;
+
 $(document).ready(function() {
-    console.log("Index page is ready");
+    connect();
+
+    $("#myButton").click(function() {
+        sendMessage();
+    });
 });
 
-// document.addEventListener("DOMContentLoaded", function(event) {
-//     console.log("Hello! I am loaded!");
-// });
+function connect() {
+    var socket = new SockJS('/our-websocket');
+    stompClient = Stomp.over(socket);
+    stompClient.connect({}, function (frame) {
+        console.log('Connected: ' + frame);
+
+        stompClient.subscribe('/topic/messages', function (message) {
+            showMessage(JSON.parse(message.body).content);
+        });
+    });
+}
+
+function showMessage(message) {
+    alert(message);
+}
+
+function sendMessage() {
+    console.log("sending message");
+    stompClient.send("/ws/message", {}, JSON.stringify({'content': 'hello!'}));
+}

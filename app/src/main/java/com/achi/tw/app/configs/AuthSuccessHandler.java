@@ -1,4 +1,4 @@
-package com.achi.tw.app.security;
+package com.achi.tw.app.configs;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;

@@ -1,4 +1,4 @@
-package com.achi.tw.app.security;
+package com.achi.tw.app.configs;
 
 import com.achi.tw.app.Services.UserDetailsServiceImpl;
 import org.springframework.context.annotation.Bean;
@@ -61,6 +61,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
                 .antMatchers("/trader", "/trader/**").hasAnyAuthority("TRADER", "ADMIN")
                 .antMatchers("/buyer", "/buyer/**", "/buyer**").hasAnyAuthority("BUYER", "ADMIN")
                 .antMatchers("/producer/**").hasAnyRole("PRODUCER", "ADMIN")
+                .antMatchers("/send-message").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin().loginPage("/login").permitAll().defaultSuccessUrl("/home", true)
