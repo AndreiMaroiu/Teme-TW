@@ -18,7 +18,7 @@
     <h1>Trader</h1>
     <div th:insert="fragments/traderNotification.html :: notification"></div>
 
-    <form method="post" action="/findByName">
+    <form method="post" action="/trader/findByName">
         <div class="d-flex flex-row">
             <input type="text" name="name" placeholder="Product Name" class="form-control m-1">
             <input type="submit" value="Search" class="btn btn-primary m-1">

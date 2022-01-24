@@ -43,10 +43,13 @@
 
     <div th:text="'Total: ' + ${total}"></div>
 
-    <form method="post" action="/buyer/buyShoppingCart">
-        <input type="submit" class="btn btn-primary" value="Buy"/>
-    </form>
+    <div class="d-flex flex-row">
+        <form method="post" action="/buyer/shoppingCart/buy" class="m-1">
+            <input type="submit" class="btn btn-primary" value="Buy"/>
+        </form>
 
+        <a href="/buyer/shoppingCart/clear" class="btn btn-danger m-1">Clear shopping cart</a>
+    </div>
 </div>
 
 </body>

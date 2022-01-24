@@ -1,5 +1,6 @@
 package com.achi.tw.app.controllers;
 
+import com.achi.tw.app.dto.Message;
 import com.achi.tw.app.entity.BuyerHistory;
 import com.achi.tw.app.entity.CartItem;
 import com.achi.tw.app.entity.TraderStock;
@@ -61,7 +62,7 @@ public class BuyerController
         }
         else
         {
-            stocks = stockRepository.findAll();
+            stocks = stockRepository.findAllAvailable();
         }
 
         model.addAttribute("stocks", stocks);
@@ -110,7 +111,7 @@ public class BuyerController
         return new ModelAndView("buyerShoppingCart");
     }
 
-    @PostMapping("/buyer/buyShoppingCart")
+    @PostMapping("/buyer/shoppingCart/buy")
     public ModelAndView buyShoppingCart()
     {
         User buyer = SecurityUtils.getUser();
@@ -127,14 +128,20 @@ public class BuyerController
             }
             else
             {
-                // TODO: handle not enough stock problem
-                break;
+                return new ModelAndView("buyerConfirmShoppingCart");
             }
         }
 
         for (var item : cart.getItems())
         {
-            stockRepository.save(item.getStock());
+            TraderStock stock = item.getStock();
+
+            if (stock.getAmount() < stock.getMinStock())
+            {
+                socketsService.notifyUser(stock.getTrader().getId(), new Message("Stock empty for " + stock.getName(), stock.getId()));
+            }
+
+            stockRepository.save(stock);
         }
 
         cart.setDate(new Date());
@@ -142,7 +149,7 @@ public class BuyerController
         historyRepository.save(cart);
 
         // TODO: should redirect to success page
-        return new ModelAndView("redirect:/buyer");
+        return new ModelAndView("redirect:/buyer/shoppingCart/success?id=" + cart.getId());
     }
 
     @PostMapping("/buyer/buyRemaining")
@@ -169,7 +176,54 @@ public class BuyerController
         }
     }
 
-    private void addToCart(Integer stockId, Integer quantity)
+    @GetMapping("/buyer/shoppingCart/buyRemaining")
+    public ModelAndView buyRemaining()
+    {
+        BuyerHistory cart = getCart();
+
+        for (var item : cart.getItems())
+        {
+            TraderStock stock = item.getStock();
+
+            if (item.getAmount() > stock.getAmount())
+            {
+                stock.buyFromStock(stock.getAmount());
+            }
+            else
+            {
+                stock.buyFromStock(item.getAmount());
+            }
+
+            stockRepository.save(stock);
+        }
+
+        cart.setDate(new Date());
+        cart.setActive(false);
+
+        historyRepository.save(cart);
+
+        return new ModelAndView("redirect:/buyer/shoppingCart/success?id=" + cart.getId());
+    }
+
+    @GetMapping("/buyer/shoppingCart/clear")
+    public ModelAndView clearShoppingCart()
+    {
+        BuyerHistory cart = getCart();
+
+        cartItemRepository.deleteAll(cart.getItems());
+
+        return new ModelAndView("redirect:/buyer/shoppingCart");
+    }
+
+    @GetMapping("/buyer/shoppingCart/success")
+    public ModelAndView shoppingCartSucces(Model model, @RequestParam Integer id)
+    {
+        BuyerHistory cart = historyRepository.findById(id).get();
+        model.addAttribute("cart", cart);
+        return new ModelAndView("buyerSuccess");
+    }
+
+    private BuyerHistory getCart()
     {
         User buyer = SecurityUtils.getUser();
         BuyerHistory cart = historyRepository.findActiveCart(buyer.getId());
@@ -181,6 +235,13 @@ public class BuyerController
             cart.setActive(true);
             historyRepository.save(cart);
         }
+
+        return cart;
+    }
+
+    private void addToCart(Integer stockId, Integer quantity)
+    {
+        BuyerHistory cart = getCart();
 
         TraderStock stock = stockRepository.getStockById(stockId);
         CartItem item = new CartItem();

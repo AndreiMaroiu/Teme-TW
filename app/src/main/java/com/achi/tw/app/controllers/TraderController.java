@@ -115,7 +115,7 @@ public class TraderController
         return new ModelAndView("redirect:/trader");
     }
 
-    @PostMapping("/findByName")
+    @PostMapping("/trader/findByName")
     public ModelAndView findByName(@RequestParam(name = "name") String name)
     {
         return new ModelAndView("redirect:/trader?name=" + name);
