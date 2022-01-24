@@ -187,6 +187,7 @@ public class BuyerController
 
             if (item.getAmount() > stock.getAmount())
             {
+                item.setAmount(stock.getAmount());
                 stock.buyFromStock(stock.getAmount());
             }
             else
