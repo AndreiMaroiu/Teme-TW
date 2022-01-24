@@ -15,7 +15,7 @@ function connect() {
         });
 
         stompClient.subscribe('/user/topic/private-messages', function (message) {
-            showMessage(JSON.parse(message.body).content);
+            showPrivateMessage(JSON.parse(message.body));
         });
     },  function (message){
        //alert("disconnected!");
@@ -30,6 +30,25 @@ function showMessage(message) {
     alert(message);
 }
 
+function showPrivateMessage(message)
+{
+    if (message.content.startsWith("Stock empty"))
+    {
+        let not = document.getElementById("notification");
+        not.style.display = 'block';
+
+        let text = document.getElementById("notification-text");
+        text.innerText = message.content;
+
+        let refill = document.getElementById("notification-refill");
+        refill.href = "/trader/refill?id=" + message.id;
+    }
+    else
+    {
+        alert(message.content);
+    }
+}
+
 function sendMessage() {
     console.log("sending message");
     stompClient.send("/ws/message", {}, JSON.stringify({'content': 'hello!'}));
@@ -37,5 +56,5 @@ function sendMessage() {
 
 function sendPrivateMessage() {
     console.log("sending private message");
-    stompClient.send("/ws/private-message", {}, JSON.stringify({'content': 'hello!'}));
+    stompClient.send("/ws/private-message", {}, JSON.stringify({'content': 'Stock empty for tea', 'id': 5}));
 }

@@ -29,7 +29,7 @@ public class WebsocketController
     @PostMapping("/send-private-message/{id}")
     public String sendPrivateMessage(@PathVariable final String id, @RequestBody Message message)
     {
-        service.notifyUser(id ,message.getContent());
+        service.notifyUser(id, message);
         return "success!";
     }
 }

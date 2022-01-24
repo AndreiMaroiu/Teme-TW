@@ -12,4 +12,13 @@ public class Message
     @Getter
     @Setter
     private String content;
+
+    @Getter
+    @Setter
+    private Integer id;
+
+    public Message(String message)
+    {
+        this.content = message;
+    }
 }

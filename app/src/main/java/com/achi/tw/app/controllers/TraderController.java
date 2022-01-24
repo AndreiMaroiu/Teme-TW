@@ -6,6 +6,7 @@ import com.achi.tw.app.entity.User;
 import com.achi.tw.app.repositories.ProducerStockRepository;
 import com.achi.tw.app.repositories.TraderStockRepository;
 import com.achi.tw.app.services.MyUserDetails;
+import com.achi.tw.app.utils.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.ui.Model;
@@ -48,7 +49,7 @@ public class TraderController
     }
 
     @GetMapping("/trader/inventory")
-    public ModelAndView traderInventory(Model model)
+    public ModelAndView traderInventory(Model model, @RequestParam(required = false) String refilledStock)
     {
         model.addAttribute("stocks", traderStockRepository.getStocksByUser(getUser().getId()));
         return new ModelAndView("traderInventory");
@@ -108,11 +109,6 @@ public class TraderController
         if (list != null && list.size() > 0)
         {
             ProducerStock first = list.get(0);
-//            TraderStock stock = new TraderStock();
-//            stock.setTrader(getUser());
-//            stock.setPrice(first.getPrice());
-//            stock.setName(first.getName());
-//            traderStockRepository.save(stock);
             return new ModelAndView("redirect:/trader/confirm?stockId=" + first.getId());
         }
 
@@ -123,6 +119,29 @@ public class TraderController
     public ModelAndView findByName(@RequestParam(name = "name") String name)
     {
         return new ModelAndView("redirect:/trader?name=" + name);
+    }
+
+    @GetMapping("/trader/refill")
+    public ModelAndView refill(@RequestParam(name = "id") Integer id)
+    {
+        TraderStock stock = traderStockRepository.findById(id).get();
+        stock.refill();
+        traderStockRepository.save(stock);
+        return new ModelAndView("redirect:/trader/inventory?refilledStock=" + stock.getName());
+    }
+
+    @GetMapping("/trader/refillAll")
+    public ModelAndView refillAll()
+    {
+        var stocks = traderStockRepository.getStocksByUser(SecurityUtils.getUser().getId());
+
+        for (var stock : stocks)
+        {
+            stock.refill();
+            traderStockRepository.save(stock);
+        }
+
+        return new ModelAndView("redirect:/trader/inventory?refilledStock=all");
     }
 
     private User getUser()

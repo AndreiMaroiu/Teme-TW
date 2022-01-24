@@ -39,4 +39,9 @@ public class TraderStock
     {
         amount -= howMuch;
     }
+
+    public void refill()
+    {
+        amount = maxStock;
+    }
 }
