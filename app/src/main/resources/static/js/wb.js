@@ -1,5 +1,4 @@
 var stompClient = null;
-var notificationCount = 0;
 
 $(document).ready(function() {
     connect();
@@ -18,7 +17,13 @@ function connect() {
         stompClient.subscribe('/user/topic/private-messages', function (message) {
             showMessage(JSON.parse(message.body).content);
         });
+    },  function (message){
+       //alert("disconnected!");
     });
+
+    // socket.onclose = function (){
+    //   alert("socket closed!");
+    // };
 }
 
 function showMessage(message) {

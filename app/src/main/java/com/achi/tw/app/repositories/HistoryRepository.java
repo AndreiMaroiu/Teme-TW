@@ -10,5 +10,11 @@ import java.util.List;
 public interface HistoryRepository extends CrudRepository<BuyerHistory, Integer>
 {
     @Query("SELECT h from BuyerHistory h where h.buyer.id = :id")
-    public List<BuyerHistory> findAllByBuyer(@Param("id") int id);
+    List<BuyerHistory> findAllByBuyer(@Param("id") int id);
+
+    @Query("SELECT h from BuyerHistory h where h.buyer.id = :id and h.active = true")
+    BuyerHistory findActiveCart(@Param("id") int id);
+
+    @Query("SELECT h from BuyerHistory h where h.buyer.id = :id and h.active = false")
+    List<BuyerHistory> findAllInactiveByUser(@Param("id") int id);
 }
