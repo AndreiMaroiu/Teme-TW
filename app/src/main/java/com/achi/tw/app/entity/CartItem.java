@@ -16,20 +16,14 @@ public class CartItem
     @Column(name = "cart_id", nullable = false)
     private int id;
 
-    @Column(name = "product_name")
-    private String productName;
-
-    @Column(name = "product_price")
-    private float productPrice;
-
     @Column
     private int amount;
-
-    @OneToOne
-    @JoinColumn(name = "trader_id", referencedColumnName = "user_id")
-    private User trader;
 
     @ManyToOne
     @JoinColumn(name = "history_id", referencedColumnName = "id")
     private BuyerHistory history;
+
+    @OneToOne
+    @JoinColumn
+    private TraderStock stock;
 }

@@ -36,7 +36,7 @@ public class BuyerHistory
 
         for(var item : items)
         {
-            total += item.getAmount() * item.getProductPrice();
+            total += item.getAmount() * item.getStock().getPrice();
         }
 
         return total;

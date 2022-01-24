@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -71,7 +72,7 @@ public class BuyerController
     @GetMapping("/buyer/history")
     public ModelAndView history(Model model)
     {
-        model.addAttribute("commands", historyRepository.findAllByBuyer(SecurityUtils.getUser().getId()));
+        model.addAttribute("commands", historyRepository.findAllInactiveByUser(SecurityUtils.getUser().getId()));
         return new ModelAndView("buyerHistory");
     }
 
@@ -99,7 +100,7 @@ public class BuyerController
 
         for (var item : items)
         {
-            total += item.getAmount() * item.getProductPrice();
+            total += item.getAmount() * item.getStock().getPrice();
         }
 
         model.addAttribute("items", items);
@@ -109,8 +110,43 @@ public class BuyerController
         return new ModelAndView("buyerShoppingCart");
     }
 
+    @PostMapping("/buyer/buyShoppingCart")
+    public ModelAndView buyShoppingCart()
+    {
+        User buyer = SecurityUtils.getUser();
+
+        BuyerHistory cart = historyRepository.findActiveCart(buyer.getId());
+
+        for (var item : cart.getItems())
+        {
+            TraderStock stock = item.getStock();
+
+            if (stock.getAmount() >= item.getAmount())
+            {
+                stock.buyFromStock(item.getAmount());
+            }
+            else
+            {
+                // TODO: handle not enough stock problem
+                break;
+            }
+        }
+
+        for (var item : cart.getItems())
+        {
+            stockRepository.save(item.getStock());
+        }
+
+        cart.setDate(new Date());
+        cart.setActive(false);
+        historyRepository.save(cart);
+
+        // TODO: should redirect to success page
+        return new ModelAndView("redirect:/buyer");
+    }
+
     @PostMapping("/buyer/buyRemaining")
-    public ModelAndView buyRemaningStock(@RequestParam Integer stockId)
+    public ModelAndView buyRemainingStock(@RequestParam Integer stockId)
     {
         var stock = stockRepository.findById(stockId);
         addToCart(stockId, stock.get().getAmount());
@@ -129,7 +165,6 @@ public class BuyerController
         }
         else
         {
-            // TODO: redirect to confirm
             return new ModelAndView("redirect:/buyer/confirm?insufficientStocks=true&stockId=" + stockId);
         }
     }
@@ -138,8 +173,6 @@ public class BuyerController
     {
         User buyer = SecurityUtils.getUser();
         BuyerHistory cart = historyRepository.findActiveCart(buyer.getId());
-
-        // TODO: check if null, then create new
 
         if (cart == null)
         {
@@ -153,36 +186,8 @@ public class BuyerController
         CartItem item = new CartItem();
         item.setHistory(cart);
         item.setAmount(quantity);
-        item.setProductName(stock.getName());
-        item.setProductPrice(stock.getPrice());
-        item.setTrader(stock.getTrader());
+        item.setStock(stock);
 
         cartItemRepository.save(item);
     }
-
-//    private void doBuy(Integer stockId, Integer quantity)
-//    {
-//        TraderStock stock = stockRepository.getStockById(stockId);
-//
-//        stock.buyFromStock(quantity);
-//        stockRepository.save(stock);
-//
-//        // TODO: add to history
-//
-//        BuyerHistory history = new BuyerHistory();
-//        history.setProductName(stock.getName());
-//        history.setTrader(stock.getTrader());
-//        history.setBuyer(SecurityUtils.getUser());
-//        history.setDate(new Date());
-//        history.setAmount(quantity);
-//        history.setProductPrice(stock.getPrice());
-//        historyRepository.save(history);
-//
-//        if (stock.getAmount() < stock.getMinStock())
-//        {
-//            socketsService.notifyUser(stock.getTrader().getId(), "stock refilled!");
-//            stock.setAmount(stock.getMaxStock());
-//            stockRepository.save(stock);
-//        }
-//    }
 }
