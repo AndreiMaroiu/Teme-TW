@@ -27,7 +27,7 @@
 
 <form method="post" action="/trader/confirm">
     <input type="number" name="stockId" th:value="${stock.id}" hidden/>
-    <input type="number" placeholder="Addon" name="sellingPrice" class="form-control mt-2"/>
+    <input type="number" placeholder="Addon" step="0.01" name="sellingPrice" class="form-control mt-2"/>
     <input type="number" placeholder="Minimum stock" name="min" class="form-control mt-2"/>
     <input type="number" placeholder="Minimum stock" name="max" class="form-control mt-2"/>
     <input type="submit" value="Buy" class="btn btn-primary mt-2"/>

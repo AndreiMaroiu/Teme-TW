@@ -15,6 +15,6 @@ public interface HistoryRepository extends CrudRepository<BuyerHistory, Integer>
     @Query("SELECT h from BuyerHistory h where h.buyer.id = :id and h.active = true")
     BuyerHistory findActiveCart(@Param("id") int id);
 
-    @Query("SELECT h from BuyerHistory h where h.buyer.id = :id and h.active = false")
+    @Query("SELECT h from BuyerHistory h where h.buyer.id = :id and h.active = false order by h.date desc")
     List<BuyerHistory> findAllInactiveByUser(@Param("id") int id);
 }

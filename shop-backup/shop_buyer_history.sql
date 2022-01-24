@@ -30,7 +30,7 @@ CREATE TABLE `buyer_history` (
   PRIMARY KEY (`id`),
   KEY `buyer_id` (`buyer_id`),
   CONSTRAINT `buyer_id` FOREIGN KEY (`buyer_id`) REFERENCES `user` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -39,7 +39,7 @@ CREATE TABLE `buyer_history` (
 
 LOCK TABLES `buyer_history` WRITE;
 /*!40000 ALTER TABLE `buyer_history` DISABLE KEYS */;
-INSERT INTO `buyer_history` VALUES (26,'2022-01-24 18:11:27',7,0),(27,'2022-01-24 19:48:37',7,0);
+INSERT INTO `buyer_history` VALUES (26,'2022-01-24 18:11:27',7,0),(27,'2022-01-24 19:48:37',7,0),(28,'2022-01-24 20:19:06',7,0),(29,'2022-01-24 20:52:23',7,0);
 /*!40000 ALTER TABLE `buyer_history` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -52,4 +52,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-01-24 20:00:04
+-- Dump completed on 2022-01-24 20:54:40

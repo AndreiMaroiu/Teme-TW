@@ -32,7 +32,7 @@ CREATE TABLE `cart_item` (
   KEY `history_id` (`history_id`),
   CONSTRAINT `history_id` FOREIGN KEY (`history_id`) REFERENCES `buyer_history` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `stock_id` FOREIGN KEY (`stock_id`) REFERENCES `trader_stock` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -41,7 +41,7 @@ CREATE TABLE `cart_item` (
 
 LOCK TABLES `cart_item` WRITE;
 /*!40000 ALTER TABLE `cart_item` DISABLE KEYS */;
-INSERT INTO `cart_item` VALUES (17,1,26,9),(18,199,27,10);
+INSERT INTO `cart_item` VALUES (17,1,26,9),(18,199,27,10),(20,3,28,14),(21,1,29,17);
 /*!40000 ALTER TABLE `cart_item` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -54,4 +54,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-01-24 20:00:04
+-- Dump completed on 2022-01-24 20:54:40

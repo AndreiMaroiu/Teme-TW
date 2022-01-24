@@ -2,6 +2,7 @@ package com.achi.tw.app.entity;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 
@@ -34,6 +35,7 @@ public class TraderStock
 
     @OneToOne
     @JoinColumn(name = "trader_id", referencedColumnName = "user_id")
+
     private User trader;
 
     public void buyFromStock(Integer howMuch)

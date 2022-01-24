@@ -28,7 +28,7 @@ CREATE TABLE `product` (
   `description` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `product_id_uindex` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -37,7 +37,7 @@ CREATE TABLE `product` (
 
 LOCK TABLES `product` WRITE;
 /*!40000 ALTER TABLE `product` DISABLE KEYS */;
-INSERT INTO `product` VALUES (1,'tea',NULL),(2,'coffee',NULL),(3,'kurtos',NULL),(4,'Playstation 6','The brand new playstation'),(5,'PC 2','The wait has ended!'),(6,'kurtos','cu nuca'),(7,'Tea','It\'s warm');
+INSERT INTO `product` VALUES (1,'tea',NULL),(2,'coffee',NULL),(3,'kurtos',NULL),(4,'Playstation 6','The brand new playstation'),(5,'PC 2','The wait has ended!'),(6,'kurtos','cu nuca'),(7,'Tea','It\'s warm'),(8,'coffee','OZN'),(9,'coffee','Black & Yellow'),(10,'kurtos','cu ciocolata');
 /*!40000 ALTER TABLE `product` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -50,4 +50,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-01-24 20:00:04
+-- Dump completed on 2022-01-24 20:54:41

@@ -31,9 +31,8 @@ CREATE TABLE `trader_stock` (
   `current_stock` int NOT NULL,
   `product_id` int NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `trader_stock_id_uindex` (`id`),
-  CONSTRAINT `trader_id` FOREIGN KEY (`id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  UNIQUE KEY `trader_stock_id_uindex` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -42,7 +41,7 @@ CREATE TABLE `trader_stock` (
 
 LOCK TABLES `trader_stock` WRITE;
 /*!40000 ALTER TABLE `trader_stock` DISABLE KEYS */;
-INSERT INTO `trader_stock` VALUES (9,3500,6,5,100,100,4),(10,6,6,5,200,200,7);
+INSERT INTO `trader_stock` VALUES (9,3500,6,5,100,100,4),(10,6,6,5,200,200,7),(14,11,6,1,3,3,6),(15,15000,9,5,150,150,5),(16,3.5,11,12,345,345,8),(17,20000,11,3,50,49,5);
 /*!40000 ALTER TABLE `trader_stock` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -55,4 +54,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-01-24 20:00:03
+-- Dump completed on 2022-01-24 20:54:40
