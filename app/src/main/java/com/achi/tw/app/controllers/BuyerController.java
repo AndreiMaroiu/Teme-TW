@@ -1,12 +1,10 @@
 package com.achi.tw.app.controllers;
 
 import com.achi.tw.app.dto.Message;
-import com.achi.tw.app.entity.BuyerHistory;
-import com.achi.tw.app.entity.CartItem;
-import com.achi.tw.app.entity.TraderStock;
-import com.achi.tw.app.entity.User;
+import com.achi.tw.app.entity.*;
 import com.achi.tw.app.repositories.CartItemRepository;
 import com.achi.tw.app.repositories.HistoryRepository;
+import com.achi.tw.app.repositories.TraderNotificationRepository;
 import com.achi.tw.app.repositories.TraderStockRepository;
 import com.achi.tw.app.services.SocketsService;
 import com.achi.tw.app.utils.SecurityUtils;
@@ -28,15 +26,18 @@ public class BuyerController
     private final TraderStockRepository stockRepository;
     private final HistoryRepository historyRepository;
     private final CartItemRepository cartItemRepository;
+    private final TraderNotificationRepository notificationRepository;
 
     @Autowired
     public BuyerController(SocketsService socketsService, TraderStockRepository stockRepository,
-                           HistoryRepository historyRepository, CartItemRepository cartItemRepository)
+                           HistoryRepository historyRepository, CartItemRepository cartItemRepository,
+                           TraderNotificationRepository notificationRepository)
     {
         this.socketsService = socketsService;
         this.stockRepository = stockRepository;
         this.historyRepository = historyRepository;
         this.cartItemRepository = cartItemRepository;
+        this.notificationRepository = notificationRepository;
     }
 
     private static boolean isNullOrEmpty(String str)
@@ -151,11 +152,6 @@ public class BuyerController
         return new ModelAndView("redirect:/buyer/shoppingCart/success?id=" + cart.getId());
     }
 
-    private void notifyTrader(TraderStock stock)
-    {
-        socketsService.notifyUser(stock.getTrader().getId(), new Message("Stock empty for " + stock.getName(), stock.getId()));
-    }
-
     @PostMapping("/buyer/buyRemaining")
     public ModelAndView buyRemainingStock(@RequestParam Integer stockId)
     {
@@ -255,5 +251,20 @@ public class BuyerController
         item.setStock(stock);
 
         cartItemRepository.save(item);
+    }
+
+    private void notifyTrader(TraderStock stock)
+    {
+        Integer traderId = stock.getTrader().getId();
+        String message = "Stock empty for " + stock.getName();
+        socketsService.notifyUser(traderId, new Message(message, stock.getId()));
+
+        TraderNotification notification = new TraderNotification();
+
+        notification.setTrader(stock.getTrader());
+        notification.setMessage(message);
+        notification.setStockId(stock.getId());
+
+        notificationRepository.save(notification);
     }
 }

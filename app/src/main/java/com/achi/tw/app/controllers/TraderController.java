@@ -2,13 +2,11 @@ package com.achi.tw.app.controllers;
 
 import com.achi.tw.app.entity.ProducerStock;
 import com.achi.tw.app.entity.TraderStock;
-import com.achi.tw.app.entity.User;
 import com.achi.tw.app.repositories.ProducerStockRepository;
+import com.achi.tw.app.repositories.TraderNotificationRepository;
 import com.achi.tw.app.repositories.TraderStockRepository;
-import com.achi.tw.app.services.MyUserDetails;
 import com.achi.tw.app.utils.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -21,12 +19,14 @@ public class TraderController
 {
     private final ProducerStockRepository stockRepository;
     private final TraderStockRepository traderStockRepository;
+    private final TraderNotificationRepository notificationRepository;
 
     @Autowired
-    public TraderController(ProducerStockRepository stockRepository, TraderStockRepository traderStockRepository)
+    public TraderController(ProducerStockRepository stockRepository, TraderStockRepository traderStockRepository, TraderNotificationRepository notificationRepository)
     {
         this.stockRepository = stockRepository;
         this.traderStockRepository = traderStockRepository;
+        this.notificationRepository = notificationRepository;
     }
 
     @GetMapping("/trader")
@@ -51,7 +51,7 @@ public class TraderController
     @GetMapping("/trader/inventory")
     public ModelAndView traderInventory(Model model, @RequestParam(required = false) String refilledStock)
     {
-        model.addAttribute("stocks", traderStockRepository.getStocksByUser(getUser().getId()));
+        model.addAttribute("stocks", traderStockRepository.getStocksByUser(SecurityUtils.getUser().getId()));
         return new ModelAndView("traderInventory");
     }
 
@@ -79,7 +79,7 @@ public class TraderController
             ProducerStock stock = stockRepository.findById(stockId).get();
             TraderStock entity = new TraderStock();
 
-            entity.setTrader(getUser());
+            entity.setTrader(SecurityUtils.getUser());
             entity.setPrice(stock.getPrice() + sellingPrice);
             entity.setAmount(max);
             entity.setMaxStock(max);
@@ -144,9 +144,19 @@ public class TraderController
         return new ModelAndView("redirect:/trader/inventory?refilledStock=all");
     }
 
-    private User getUser()
+    @GetMapping("/trader/notifications")
+    public ModelAndView notifications(Model model)
     {
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return ((MyUserDetails)principal).getUser();
+        model.addAttribute("notifications", notificationRepository.findAllByUser(SecurityUtils.getUser().getId()));
+
+        return  new ModelAndView("traderNotifications");
+    }
+
+    @GetMapping("/trader/notification/delete")
+    public ModelAndView deleteNotification(@RequestParam Integer id)
+    {
+        notificationRepository.deleteById(id);
+
+        return new ModelAndView("redirect:/trader/notifications");
     }
 }

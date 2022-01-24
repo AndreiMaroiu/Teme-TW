@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="/webjars/jquery/jquery.min.js"></script>
+    <script src="/webjars/sockjs-client/sockjs.min.js"></script>
+    <script src="/webjars/stomp-websocket/stomp.min.js"></script>
+</head>
+<body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
+<nav th:insert="fragments/traderNavBar.html :: nav"></nav>
+
+<div class="container-md mt-xxl-5">
+    <h1>Notifications</h1>
+
+    <table>
+        <tr th:each="notification : ${notifications}">
+            <td>
+                <div class="alert alert-danger">
+                    <div id="notification-text" class="mb-2" th:text="${notification.message}">
+                    </div>
+                    <a th:href="@{/trader/refill/(id=${notification.stockId})}" class="btn btn-primary">Refill</a>
+                    <a th:href="@{/trader/notification/delete/(id=${notification.id})}" class="btn btn-danger">Delete Notification</a>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
+
+</body>
+</html>
