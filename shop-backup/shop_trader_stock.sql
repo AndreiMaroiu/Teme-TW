@@ -24,16 +24,16 @@ DROP TABLE IF EXISTS `trader_stock`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `trader_stock` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `product_name` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `price` float NOT NULL,
   `trader_id` int NOT NULL,
   `min_stock` int NOT NULL,
   `max_stock` int NOT NULL,
   `current_stock` int NOT NULL,
+  `product_id` int NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `trader_stock_id_uindex` (`id`),
   CONSTRAINT `trader_id` FOREIGN KEY (`id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -42,7 +42,7 @@ CREATE TABLE `trader_stock` (
 
 LOCK TABLES `trader_stock` WRITE;
 /*!40000 ALTER TABLE `trader_stock` DISABLE KEYS */;
-INSERT INTO `trader_stock` VALUES (1,'kurtos',10,6,50,1000,995),(2,'Playstation 6',3000,6,6,60,60),(5,'Tea',6,6,5,100,93),(6,'TV',1100,6,3,10,10),(7,'PC 2',15000,9,3,20,20),(8,'Laptop',1550,9,4,60,60);
+INSERT INTO `trader_stock` VALUES (9,3500,6,5,100,100,4),(10,6,6,5,200,200,7);
 /*!40000 ALTER TABLE `trader_stock` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -55,4 +55,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-01-24 17:22:46
+-- Dump completed on 2022-01-24 20:00:03

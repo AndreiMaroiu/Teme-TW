@@ -16,33 +16,28 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `producer_stock`
+-- Table structure for table `trader_notification`
 --
 
-DROP TABLE IF EXISTS `producer_stock`;
+DROP TABLE IF EXISTS `trader_notification`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `producer_stock` (
+CREATE TABLE `trader_notification` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `producer_id` int NOT NULL,
-  `price` float NOT NULL,
-  `product_id` int NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `producer_id` (`producer_id`),
-  KEY `product_id` (`product_id`),
-  CONSTRAINT `producer_id` FOREIGN KEY (`producer_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `product_id` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `message` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `stock_id` int NOT NULL,
+  `trader_id` int NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `producer_stock`
+-- Dumping data for table `trader_notification`
 --
 
-LOCK TABLES `producer_stock` WRITE;
-/*!40000 ALTER TABLE `producer_stock` DISABLE KEYS */;
-INSERT INTO `producer_stock` VALUES (9,5,3000,4),(10,8,10000,5),(11,5,10,6),(12,5,5,7);
-/*!40000 ALTER TABLE `producer_stock` ENABLE KEYS */;
+LOCK TABLES `trader_notification` WRITE;
+/*!40000 ALTER TABLE `trader_notification` DISABLE KEYS */;
+/*!40000 ALTER TABLE `trader_notification` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
