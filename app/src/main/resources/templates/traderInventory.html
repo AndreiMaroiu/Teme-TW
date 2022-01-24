@@ -18,9 +18,9 @@
 <nav th:insert="fragments/traderNavBar.html :: nav"></nav>
 
 <div class="container-md mt-xxl-5">
-    <h1>
-        Inventory
-    </h1>
+    <h1>Inventory</h1>
+
+    <div th:insert="fragments/traderNotification.html :: notification"></div>
 
     <div class="alert alert-info" th:if="${param.refilledStock}">
         <div th:text="'Refilled stock: ' + ${param.refilledStock}"></div>
@@ -32,6 +32,7 @@
         <thead>
         <tr>
             <td>Product Name</td>
+            <td>Product Description</td>
             <td>Product Price</td>
             <td>Current Stock</td>
             <td>Min Stock</td>
@@ -41,7 +42,8 @@
         </thead>
         <tbody>
         <tr th:each="stock : ${stocks}">
-            <td th:text="${stock.name}"></td>
+            <td th:text="${stock.product.name}"></td>
+            <td th:text="${stock.product.description}"></td>
             <td th:text="${stock.price}"></td>
             <td th:text="${stock.amount}"></td>
             <td th:text="${stock.minStock}"></td>

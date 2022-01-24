@@ -84,7 +84,7 @@ public class TraderController
             entity.setAmount(max);
             entity.setMaxStock(max);
             entity.setMinStock(min);
-            entity.setName(stock.getName());
+            entity.setProduct(stock.getProduct());
 
             traderStockRepository.save(entity);
 

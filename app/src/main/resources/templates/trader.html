@@ -28,7 +28,7 @@
     <div th:if="${name}">
         <form method="post" action="/trader/buy">
             <input type="text" name="name" th:value="${name}" hidden>
-            <input type="submit" value="Buy Cheapest">
+            <input type="submit" value="Buy Cheapest" class="btn btn-secondary">
         </form>
     </div>
 
@@ -37,13 +37,15 @@
             <thead>
             <tr>
                 <td>Product Name</td>
+                <td>Product Description</td>
                 <td>Product Price</td>
                 <td>Producer Name</td>
             </tr>
             </thead>
             <tbody>
             <tr th:each="stock : ${stocks}">
-                <td th:text="${stock.name}"></td>
+                <td th:text="${stock.product.name}"></td>
+                <td th:text="${stock.product.description}"></td>
                 <td th:text="${stock.price}"></td>
                 <td th:text="${stock.producer.username}"></td>
             </tr>

@@ -16,8 +16,9 @@ public class TraderStock
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "product_name")
-    private String name;
+    @OneToOne
+    @JoinColumn(name = "product_id", referencedColumnName = "id")
+    private Product product;
 
     @Column
     private float price;
@@ -43,5 +44,10 @@ public class TraderStock
     public void refill()
     {
         amount = maxStock;
+    }
+
+    public String getName()
+    {
+        return product.getName();
     }
 }

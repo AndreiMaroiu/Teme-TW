@@ -22,12 +22,14 @@
         <thead>
             <tr>
                 <td>Name</td>
+                <td>Description</td>
                 <td>Price</td>
             </tr>
         </thead>
         <tbody>
             <tr th:each="stock : ${stocks}">
-                <td th:text="${stock.name}"></td>
+                <td th:text="${stock.product.name}"></td>
+                <td th:text="${stock.product.description}"></td>
                 <td th:text="${stock.price}"></td>
             </tr>
         </tbody>

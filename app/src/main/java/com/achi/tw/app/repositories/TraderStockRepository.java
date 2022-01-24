@@ -18,10 +18,10 @@ public interface TraderStockRepository extends CrudRepository<TraderStock, Integ
     @Query("SELECT s FROM TraderStock s WHERE s.id = :id")
     TraderStock getStockById(@Param("id") Integer id);
 
-    @Query("SELECT s FROM TraderStock s WHERE s.name = :name and s.amount > 0")
+    @Query("SELECT s FROM TraderStock s WHERE s.product.name = :name and s.amount > 0")
     List<TraderStock> findStocksByProductName(@Param("name") String name);
 
-    @Query("SELECT s FROM TraderStock s WHERE s.price < :price and s.name = :name and s.amount > 0")
+    @Query("SELECT s FROM TraderStock s WHERE s.price < :price and s.product.name = :name and s.amount > 0")
     List<TraderStock> findAllByNameAndPrice(Float price, String name);
 
     @Query("SELECT s FROM TraderStock s WHERE s.price < :price and s.amount > 0")

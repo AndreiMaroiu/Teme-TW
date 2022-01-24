@@ -8,5 +8,5 @@ import org.springframework.data.repository.query.Param;
 public interface RoleRepository extends CrudRepository<Role, Long>
 {
     @Query("SELECT r FROM Role r WHERE r.name = :name")
-    public Role getRoleByName(@Param("name") String name);
+    Role getRoleByName(@Param("name") String name);
 }

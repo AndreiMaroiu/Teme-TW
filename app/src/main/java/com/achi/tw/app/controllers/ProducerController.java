@@ -1,6 +1,7 @@
 package com.achi.tw.app.controllers;
 
 import com.achi.tw.app.entity.ProducerStock;
+import com.achi.tw.app.entity.Product;
 import com.achi.tw.app.entity.User;
 import com.achi.tw.app.repositories.ProducerStockRepository;
 import com.achi.tw.app.repositories.ProductRepository;
@@ -49,13 +50,19 @@ public class ProducerController
     }
 
     @PostMapping("/addStock")
-    public ModelAndView addStock(@RequestParam(name = "name") String name, @RequestParam Float price)
+    public ModelAndView addStock(@RequestParam String name, @RequestParam Float price, @RequestParam String description)
     {
         try
         {
             ProducerStock producerStock = new ProducerStock();
+            Product product = new Product();
 
-            producerStock.setName(name);
+            product.setName(name);
+            product.setDescription(description);
+
+            productRepository.save(product);
+
+            producerStock.setProduct(product);
             producerStock.setPrice(price);
             producerStock.setProducer(SecurityUtils.getUser());
 

@@ -16,8 +16,9 @@ public class ProducerStock
     @Column(name = "id", nullable = false)
     private int id;
 
-    @Column(name = "product_name")
-    private String name;
+    @OneToOne
+    @JoinColumn(name = "product_id", referencedColumnName = "id")
+    private Product product;
 
     @Column(name = "price")
     private Float price;
@@ -25,4 +26,9 @@ public class ProducerStock
     @OneToOne
     @JoinColumn(name = "producer_id", referencedColumnName = "user_id")
     private User producer;
+
+    public String getName()
+    {
+        return product.getName();
+    }
 }

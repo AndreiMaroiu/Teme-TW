@@ -86,8 +86,7 @@ public class BuyerController
     }
 
     @GetMapping("/buyer/confirm")
-    private ModelAndView confirm(Model model, @RequestParam(required = false) Boolean insufficientStocks,
-                                 @RequestParam(required = false) Integer stockId)
+    private ModelAndView confirm(Model model, @RequestParam(required = false) Integer stockId)
     {
         model.addAttribute("stockId", stockId);
         return new ModelAndView("buyerConfirm");
@@ -138,7 +137,7 @@ public class BuyerController
 
             if (stock.getAmount() < stock.getMinStock())
             {
-                socketsService.notifyUser(stock.getTrader().getId(), new Message("Stock empty for " + stock.getName(), stock.getId()));
+                notifyTrader(stock);
             }
 
             stockRepository.save(stock);
@@ -150,6 +149,11 @@ public class BuyerController
 
         // TODO: should redirect to success page
         return new ModelAndView("redirect:/buyer/shoppingCart/success?id=" + cart.getId());
+    }
+
+    private void notifyTrader(TraderStock stock)
+    {
+        socketsService.notifyUser(stock.getTrader().getId(), new Message("Stock empty for " + stock.getName(), stock.getId()));
     }
 
     @PostMapping("/buyer/buyRemaining")
@@ -195,6 +199,7 @@ public class BuyerController
             }
 
             stockRepository.save(stock);
+            notifyTrader(stock);
         }
 
         cart.setDate(new Date());
