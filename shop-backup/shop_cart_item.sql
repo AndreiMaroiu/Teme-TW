@@ -16,31 +16,29 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `buyer_history`
+-- Table structure for table `cart_item`
 --
 
-DROP TABLE IF EXISTS `buyer_history`;
+DROP TABLE IF EXISTS `cart_item`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `buyer_history` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `date` datetime DEFAULT NULL,
-  `buyer_id` int DEFAULT NULL,
-  `active` tinyint(1) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `buyer_id` (`buyer_id`),
-  CONSTRAINT `buyer_id` FOREIGN KEY (`buyer_id`) REFERENCES `user` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+CREATE TABLE `cart_item` (
+  `cart_id` int NOT NULL AUTO_INCREMENT,
+  `amount` int NOT NULL,
+  `history_id` int NOT NULL,
+  `stock_id` int NOT NULL,
+  PRIMARY KEY (`cart_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `buyer_history`
+-- Dumping data for table `cart_item`
 --
 
-LOCK TABLES `buyer_history` WRITE;
-/*!40000 ALTER TABLE `buyer_history` DISABLE KEYS */;
-INSERT INTO `buyer_history` VALUES (16,'2022-01-24 13:13:53',7,0),(17,'2022-01-24 15:47:05',7,0),(18,'2022-01-24 15:50:18',7,0),(19,'2022-01-24 15:51:58',7,0),(20,'2022-01-24 16:27:31',7,0),(21,'2022-01-24 16:47:40',7,0),(22,'2022-01-24 16:48:49',7,0),(23,'2022-01-24 16:57:23',7,0),(24,'2022-01-24 16:58:43',7,0),(25,'2022-01-24 17:10:25',7,0);
-/*!40000 ALTER TABLE `buyer_history` ENABLE KEYS */;
+LOCK TABLES `cart_item` WRITE;
+/*!40000 ALTER TABLE `cart_item` DISABLE KEYS */;
+INSERT INTO `cart_item` VALUES (2,3,16,5),(3,10,17,6),(4,8,18,6),(5,10,19,6),(9,10,20,5),(10,10,21,5),(11,5,22,1),(12,2,23,1),(13,1,23,5),(14,3,24,1),(15,6,24,5),(16,58,25,8);
+/*!40000 ALTER TABLE `cart_item` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -52,4 +50,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-01-24 17:22:46
+-- Dump completed on 2022-01-24 17:22:47

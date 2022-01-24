@@ -30,7 +30,7 @@ CREATE TABLE `producer_stock` (
   PRIMARY KEY (`id`),
   KEY `producer_id` (`producer_id`),
   CONSTRAINT `producer_id` FOREIGN KEY (`producer_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -39,7 +39,7 @@ CREATE TABLE `producer_stock` (
 
 LOCK TABLES `producer_stock` WRITE;
 /*!40000 ALTER TABLE `producer_stock` DISABLE KEYS */;
-INSERT INTO `producer_stock` VALUES (1,1,'Coffee',1),(2,5,'Kurtos',10),(3,5,'Tea',5),(4,5,'TV',1000),(5,5,'Playstation 6',3000),(6,5,'Playstation 7',5000),(7,8,'PC 2',10000);
+INSERT INTO `producer_stock` VALUES (1,1,'Coffee',1),(2,5,'Kurtos',10),(3,5,'Tea',5),(4,5,'TV',1000),(5,5,'Playstation 6',3000),(6,5,'Playstation 7',5000),(7,8,'PC 2',10000),(8,10,'Laptop',1500);
 /*!40000 ALTER TABLE `producer_stock` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -52,4 +52,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-01-22 19:44:00
+-- Dump completed on 2022-01-24 17:22:46

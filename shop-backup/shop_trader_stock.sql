@@ -33,7 +33,7 @@ CREATE TABLE `trader_stock` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `trader_stock_id_uindex` (`id`),
   CONSTRAINT `trader_id` FOREIGN KEY (`id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -42,7 +42,7 @@ CREATE TABLE `trader_stock` (
 
 LOCK TABLES `trader_stock` WRITE;
 /*!40000 ALTER TABLE `trader_stock` DISABLE KEYS */;
-INSERT INTO `trader_stock` VALUES (1,'kurtos',10,6,5,0,0),(2,'Playstation 6',3000,6,7,0,0),(3,'Playstation 7',5000,6,0,0,0),(5,'Tea',6,6,5,100,0),(6,'TV',1100,6,3,10,10),(7,'PC 2',15000,9,3,20,20);
+INSERT INTO `trader_stock` VALUES (1,'kurtos',10,6,50,1000,995),(2,'Playstation 6',3000,6,6,60,60),(5,'Tea',6,6,5,100,93),(6,'TV',1100,6,3,10,10),(7,'PC 2',15000,9,3,20,20),(8,'Laptop',1550,9,4,60,60);
 /*!40000 ALTER TABLE `trader_stock` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -55,4 +55,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-01-22 19:44:00
+-- Dump completed on 2022-01-24 17:22:46
