@@ -50,7 +50,7 @@ public class QuizService
 
     public float getTotal(Map<Question, List<Long>> answers)
     {
-        float procent = 10.0f / answers.size();
+        float procent = 10.0f / getAllQuestionsList().size();
         float total = 0.0f;
 
         for (var pair : answers.entrySet())

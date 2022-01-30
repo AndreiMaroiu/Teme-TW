@@ -50,8 +50,6 @@ public class MainController
     {
         model.addAttribute("questions", quizService.getAllQuestion());
 
-        // if questionId is null that means the user if on the first question
-
         // if the service cannot find question that means the user finished the quiz
         if (questionId != null && quizService.getQuestion(questionId) == null)
         {
