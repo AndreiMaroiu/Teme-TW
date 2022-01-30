@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragment/pageheader :: head"></head>
+
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+
+    <div th:replace="fragment/navmenu :: navmenu(selctedNavItem='navDepartmentOverview')"/>
+
+    <div class="content-wrapper">
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1 class="m-0">Department Management</h1>
+                    </div>
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a th:href="@{/index}">Home</a></li>
+                            <li class="breadcrumb-item active">Department Overview</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <section class="content">
+            <div class="container-fluid">
+
+                <div class="row" th:if="${alert?.type.name() != 'NONE'}">
+                    <div class="col-12">
+                        <div class="card shadow" th:classappend="'card-' + ${alert?.type.cssClass}">
+                            <div class="card-header">
+                                <h3 class="card-title" th:text="${alert?.title}"></h3>
+                                <div class="card-tools">
+                                    <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="card-body" th:text="${alert?.message}"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card card-primary">
+                            <div class="card-header">
+                                <h3 class="card-title">Department overview</h3>
+                            </div>
+                            <div class="card-body">
+                                <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <table id="example1" class="table table-bordered table-striped">
+                                                <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>Department Code</th>
+                                                    <th>Department name</th>
+                                                    <th>Total employees</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr th:each="department : ${departmentList}">
+                                                    <td th:text="${department.id}" />
+                                                    <td th:text="${department.code}" />
+                                                    <td th:text="${department.description}" />
+                                                    <td th:text="${department.employeeList.size()}" />
+                                                    <td>
+                                                        <form th:action="@{/editDepartment}" th:object=${department} method="post" style="display: inline-block;">
+                                                            <input class="d-none" name="departmentId" th:value="*{id}">
+                                                            <button class="btn btn-primary btn-sm" th:id="'btn_edit_' + ${department.id}"
+                                                                    type="submit" title="Edit department"
+                                                                    th:disabled="${!userPermissions.contains('DEPARTMENT_EDIT')}">Edit
+                                                            </button>
+                                                        </form>
+                                                        <form th:action="@{/deleteDepartment}" th:object=${department} method="post" style="display: inline-block;">
+                                                            <input class="d-none" name="departmentId" th:value="*{id}">
+                                                            <button class="btn btn-danger btn-sm" th:id="'btn_delete_' + ${department.id}"
+                                                                    type="submit" title="Delete department"
+                                                                    th:disabled="${!userPermissions.contains('DEPARTMENT_DELETE')}">Delete
+                                                            </button>
+                                                        </form>
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                                <tfoot>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>Department Code</th>
+                                                    <th>Department name</th>
+                                                    <th>Total employees</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                                </tfoot>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <div th:replace="fragment/copyright :: copyright"/>
+</div>
+
+<div th:replace="fragment/pagefooter :: pagefooter"/>
+</body>
+</html>

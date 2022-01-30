@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragment/pageheader-simple :: head"></head>
+<body class="hold-transition login-page">
+<div class="login-box">
+    <div class="login-logo">
+        <span><b>Employee</b>Demo</span>
+    </div>
+    <div class="card">
+        <div class="card-body login-card-body">
+            <p class="login-box-msg">Sign in to start your session</p>
+
+            <form name="f" th:action="@{/login}" method="post">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" id="username" name="username" placeholder="Username"/>
+                    <!--autocomplete="off" readonly
+                    onfocus="this.removeAttribute('readonly');/>"-->
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <span class="fas fa-envelope"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="input-group mb-3">
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Password" autocomplete="off" readonly
+                           onfocus="this.removeAttribute('readonly');">
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <span class="fas fa-lock"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row justify-content-end">
+                    <div class="col-4">
+                        <button type="submit" class="btn btn-primary btn-block">Sign In</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div th:replace="fragment/pagefooter-simple :: pagefooter-simple"/>
+
+</body>
+</html>

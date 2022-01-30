@@ -1,0 +1,24 @@
+insert into t_department (department_code, department_name) values ('AB12', 'Human Resources');
+insert into t_department (department_code, department_name) values ('AC99', 'Accounting');
+insert into t_department (department_code, department_name) values ('DF55', 'Manufacturing');
+insert into t_department (department_code, department_name) values ('IT38', 'IT and Support');
+insert into t_department (department_code, department_name) values ('MG24', 'Management');
+insert into t_department (department_code, department_name) values ('XX54', 'Logistics');
+
+insert into t_EMPLOYEE (employee_number, last_name, first_name, monthly_salary, id_department) values ('ABC1234', 'Popescu', 'Andrei', 6500, 1);
+insert into t_EMPLOYEE (employee_number, last_name, first_name, monthly_salary, id_department) values ('ABC5555', 'Haney', 'Dani', 6375, 3);
+insert into t_EMPLOYEE (employee_number, last_name, first_name, monthly_salary, id_department) values ('ABC4567', 'Robertson', 'Trey', 8400, 2);
+insert into t_EMPLOYEE (employee_number, last_name, first_name, monthly_salary, id_department) values ('ABC9878', 'OReilly', 'Mandeep', 3785, 3);
+insert into t_EMPLOYEE (employee_number, last_name, first_name, monthly_salary, id_department) values ('ABC8751', 'Chadwick', 'Nur', 4250, 1);
+insert into t_EMPLOYEE (employee_number, last_name, first_name, monthly_salary, id_department) values ('ABC3357', 'Abbott', 'Atif', 5200, 2);
+insert into t_EMPLOYEE (employee_number, last_name, first_name, monthly_salary, id_department) values ('ABC8547', 'Man', 'Iron', 5150, 4);
+insert into t_EMPLOYEE (employee_number, last_name, first_name, monthly_salary, id_department) values ('ABC8338', 'Kishan', 'Lawrence', 6385, 5);
+insert into t_EMPLOYEE (employee_number, last_name, first_name, monthly_salary, id_department) values ('ABC5875', 'Mccann', 'Ryan', 4775, 1);
+insert into t_EMPLOYEE (employee_number, last_name, first_name, monthly_salary, id_department) values ('ABC5874', 'Zishan', 'Vort', 6500, 6);
+insert into t_EMPLOYEE (employee_number, last_name, first_name, monthly_salary, id_department) values ('ABC1254', 'Jensen', 'Torin', 6300, 3);
+insert into t_EMPLOYEE (employee_number, last_name, first_name, monthly_salary, id_department) values ('ABC3256', 'Santiago', 'Lily-Ann', 6450, 3);
+insert into t_EMPLOYEE (employee_number, last_name, first_name, monthly_salary, id_department) values ('ABC9856', 'Kim', 'Mikaela', 8325, 3);
+insert into t_EMPLOYEE (employee_number, last_name, first_name, monthly_salary, id_department) values ('ABC3289', 'Bloggs', 'Muhammad', 6555, 6);
+insert into t_EMPLOYEE (employee_number, last_name, first_name, monthly_salary, id_department) values ('ABC7412', 'Bowen', 'Kirstie', 5950, 3);
+insert into t_EMPLOYEE (employee_number, last_name, first_name, monthly_salary, id_department) values ('ABC2147', 'Millar', 'Johanna', 5840, 5);
+insert into t_EMPLOYEE (employee_number, last_name, first_name, monthly_salary, id_department) values ('ABC8523', 'Nichols', 'Zakk', 6125, 3);

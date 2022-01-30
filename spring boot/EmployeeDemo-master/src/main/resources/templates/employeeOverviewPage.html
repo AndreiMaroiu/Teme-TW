@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragment/pageheader :: head"></head>
+
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+
+    <div th:replace="fragment/navmenu :: navmenu(selctedNavItem='navEmployeeOverview')"/>
+
+    <div class="content-wrapper">
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1 class="m-0">Employee Management</h1>
+                    </div>
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a th:href="@{/index}">Home</a></li>
+                            <li class="breadcrumb-item active">Employee Overview</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <section class="content">
+            <div class="container-fluid">
+
+                <div class="row" th:if="${alert?.type.name() != 'NONE'}">
+                    <div class="col-12">
+                        <div class="card shadow" th:classappend="'card-' + ${alert?.type.cssClass}">
+                            <div class="card-header">
+                                <h3 class="card-title" th:text="${alert?.title}"></h3>
+                                <div class="card-tools">
+                                    <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="card-body" th:text="${alert?.message}"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card card-primary">
+                            <div class="card-header">
+                                <h3 class="card-title">Employee overview</h3>
+                            </div>
+                            <div class="card-body">
+                                <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <table id="example1" class="table table-bordered table-striped">
+                                                <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>Employee Number</th>
+                                                    <th>Employee last name</th>
+                                                    <th>Employee first name</th>
+                                                    <th>Monthly salary</th>
+                                                    <th>Department</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr th:each="employee : ${employeeList}">
+                                                    <td th:text="${employee.id}"/>
+                                                    <td th:text="${employee.employeeNumber}"/>
+                                                    <td th:text="${employee.lastName}"/>
+                                                    <td th:text="${employee.firstName}"/>
+                                                    <td th:text="${employee.monthlySalary}"/>
+                                                    <td th:text="${employee.department.code} + ' - ' + ${employee.department.description}"/>
+                                                    <td>
+                                                        <form th:action="@{/editEmployee}" th:object=${employee} method="post" style="display: inline-block;">
+                                                            <input class="d-none" name="employeeId" th:value="*{id}">
+                                                            <button class="btn btn-primary btn-sm" th:id="'btn_edit_' + ${employee.id}"
+                                                                    type="submit" title="Edit employee"
+                                                                    th:disabled="${!userPermissions.contains('EMPLOYEE_EDIT')}">Edit
+                                                            </button>
+                                                        </form>
+                                                        <form th:action="@{/deleteEmployee}" th:object=${employee} method="post" style="display: inline-block;">
+                                                            <input class="d-none" name="employeeId" th:value="*{id}">
+                                                            <button class="btn btn-danger btn-sm" th:id="'btn_delete_' + ${employee.id}"
+                                                                    type="submit" title="Delete employee"
+                                                                    th:disabled="${!userPermissions.contains('EMPLOYEE_DELETE')}">Delete
+                                                            </button>
+                                                        </form>
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                                <tfoot>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>Employee Number</th>
+                                                    <th>Employee last name</th>
+                                                    <th>Employee first name</th>
+                                                    <th>Monthly salary</th>
+                                                    <th>Department</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                                </tfoot>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <div th:replace="fragment/copyright :: copyright"/>
+</div>
+
+<div th:replace="fragment/pagefooter :: pagefooter"/>
+</body>
+</html>

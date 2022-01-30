@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/bootstrap/css/bootstrap.min.css}">
+
+</head>
+<body>
+<h1>This the body of the page</h1>
+
+<span th:text="${greetings}"/>
+
+<div class="col-6">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <td>Id</td>
+            <td>Lastname</td>
+            <td>Firstname</td>
+            <td>Monthly Salary</td>
+            <td>Dep. Code</td>
+            <td>Dep. Name</td>
+            <td>Action</td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="employee : ${employeeList}">
+            <td th:text="${employee.id}"/>
+            <td th:text="${employee.lastName}"/>
+            <td th:text="${employee.firstName}"/>
+            <td th:text="${employee.monthlySalary}"/>
+            <td th:text="${employee.department.departmentCode}"/>
+            <td th:text="${employee.department.departmentName}"/>
+            <td>
+                <form method="POST" th:action="@{/editEmployee}" th:object="${employee}">
+                    <input name="employeeId" th:value="${employee.id}">
+                    <button class="btn btn-primary" type="submit">Edit</button>
+                </form>
+                <form method="POST" th:action="@{/deleteEmployee}" th:object="${employee}">
+                    <input name="employeeId" th:value="${employee.id}">
+                    <button class="btn btn-danger" type="submit">Delete</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+
+    </table>
+
+</div>
+
+
+<div th:each="employee : ${employeeNameList}">
+    <span th:text="${employee}"/>
+</div>
+
+
+</body>
+
+<script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+
+</html>

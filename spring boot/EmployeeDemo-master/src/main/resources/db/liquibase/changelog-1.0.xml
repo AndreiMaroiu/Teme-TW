@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        logicalFilePath="db.changelog-1.0.0.xml"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog dbchangelog-3.8.xsd">
+
+    <changeSet id="1.0" author="EB">
+        <!-- TABLE T_ROLE -->
+        <createTable tableName="T_ROLE">
+            <column name="ID" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="ROLE" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="NAME" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <!-- TABLE T_PERMISSION -->
+        <createTable tableName="T_PERMISSION">
+            <column name="ID" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="PERMISSION" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="DESCRIPTION" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <!-- TABLE T_ROLE_PERMISSION -->
+        <createTable tableName="T_ROLE_PERMISSION">
+            <column name="ID" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="ID_ROLE" type="bigint">
+                <constraints nullable="false" foreignKeyName="FK_ID_RP_ROLE" references="T_ROLE(ID)"/>
+            </column>
+            <column name="ID_PERMISSION" type="bigint">
+                <constraints nullable="false" foreignKeyName="FK_ID_RP_PERMISSION" references="T_PERMISSION(ID)"/>
+            </column>
+        </createTable>
+
+        <!-- TABLE T_USERACCOUNT -->
+        <createTable tableName="T_USERACCOUNT">
+            <column name="ID" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="USERNAME" type="varchar(50)" defaultValue="0">
+                <constraints nullable="false"/>
+            </column>
+            <column name="PASSWORD" type="varchar(50)" defaultValue="0">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ACTIVE" type="number" defaultValue="0">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ID_ROLE" type="int">
+                <constraints nullable="false" foreignKeyName="FK_ID_ROLE" references="T_ROLE(ID)"/>
+            </column>
+        </createTable>
+
+        <!-- TABLE T_USERDATA -->
+        <createTable tableName="T_USERDATA">
+            <column name="ID" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="FIRSTNAME" type="varchar(255)" defaultValue="0">
+                <constraints nullable="false"/>
+            </column>
+            <column name="LASTNAME" type="varchar(255)" defaultValue="0">
+                <constraints nullable="false"/>
+            </column>
+            <column name="EMAIL" type="varchar(255)" defaultValue="0">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ID_USERACCOUNT" type="int">
+                <constraints nullable="false" foreignKeyName="FK_ID_USERACCOUNT" references="T_USERACCOUNT(ID)"/>
+            </column>
+        </createTable>
+
+    </changeSet>
+
+    <include file="changelog-1.0.sql" relativeToChangelogFile="true"/>
+
+</databaseChangeLog>

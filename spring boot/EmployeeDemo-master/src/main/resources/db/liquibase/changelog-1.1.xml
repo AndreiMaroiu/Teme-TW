@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        logicalFilePath="db.changelog-1.0.0.xml"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog dbchangelog-3.8.xsd">
+
+    <changeSet id="1.1" author="EB">
+
+        <!-- TABLE T_DEPARTMENT -->
+        <createTable tableName="T_DEPARTMENT">
+            <column name="ID" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="DEPARTMENT_CODE" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="DEPARTMENT_NAME" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <!-- TABLE T_EMPLOYEE -->
+        <createTable tableName="T_EMPLOYEE">
+            <column name="ID" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="EMPLOYEE_NUMBER" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="LAST_NAME" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="FIRST_NAME" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="MONTHLY_SALARY" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ID_DEPARTMENT" type="bigint">
+                <constraints nullable="false" foreignKeyName="FK_ID_DEPARTMENT" references="T_DEPARTMENT(ID)"/>
+            </column>
+        </createTable>
+
+    </changeSet>
+
+    <include file="changelog-1.1.sql" relativeToChangelogFile="true"/>
+
+</databaseChangeLog>

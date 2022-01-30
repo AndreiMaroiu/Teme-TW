@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragment/pageheader :: head"></head>
+
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+    <div th:replace="fragment/navmenu :: navmenu(selctedNavItem='navIndex')"/>
+
+    <div class="content-wrapper">
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1 class="m-0">Dashboard</h1>
+                    </div>
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item active"><a th:href="@{/index}">Home / Dashboard</a></li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <section class="content">
+            <div class="container-fluid">
+
+
+                <div class="row">
+                    <section class="col-lg-6">
+                        <div class="card">
+                            <div class="card-header" style="cursor: move;">
+                                <h3 class="card-title">
+                                    <i class="fas fa-chart-pie mr-1"></i>
+                                    Number of employees per department
+                                </h3>
+                            </div>
+                            <div class="card-body">
+                                <canvas id="donutChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="col-lg-6">
+                        <div class="card">
+                            <div class="card-header" style="cursor: move;">
+                                <h3 class="card-title">
+                                    <i class="fas fa-chart-pie mr-1"></i>
+                                    Salary expenses per department
+                                </h3>
+                            </div>
+                            <div class="card-body">
+                                <canvas id="barChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </section>
+    </div>
+    <div th:replace="fragment/copyright :: copyright"/>
+</div>
+<div th:replace="fragment/pagefooter :: pagefooter"/>
+
+<script th:inline="javascript">
+    $(function () {
+        var donutChartCanvas = $('#donutChart').get(0).getContext('2d')
+        var donutData = {
+            labels: [[${donutDataLabels}]],
+            datasets: [
+                {
+                    data:  [[${donutDataValues}]],
+                    backgroundColor: [[${donutDataColors}]]
+                }
+            ]
+        }
+        var donutOptions = {
+            maintainAspectRatio: false,
+            responsive: true,
+        }
+        var donutChart = new Chart(donutChartCanvas, {
+            type: 'doughnut',
+            data: donutData,
+            options: donutOptions
+        })
+
+    })
+</script>
+
+<script th:inline="javascript">
+    var areaChartData = {
+        labels  : [[${barDataLabels}]],
+        datasets: [
+            {
+                label               : 'Salary Expenses',
+                backgroundColor     : 'rgba(60,141,188,0.9)',
+                borderColor         : 'rgba(60,141,188,0.8)',
+                pointRadius          : false,
+                pointColor          : '#3b8bba',
+                pointStrokeColor    : 'rgba(60,141,188,1)',
+                pointHighlightFill  : '#fff',
+                pointHighlightStroke: 'rgba(60,141,188,1)',
+                data                : [[${barDataValues}]],
+            },
+        ]
+    }
+
+
+
+    var barChartCanvas = $('#barChart').get(0).getContext('2d')
+    var barChartData = $.extend(true, {}, areaChartData)
+
+    for (var i = 0; i<areaChartData.datasets.length; i++){
+        var temp = areaChartData.datasets[i]
+        barChartData.datasets[i] = temp
+    }
+
+    var barChartOptions = {
+        responsive              : true,
+        maintainAspectRatio     : false,
+        datasetFill             : false,
+        legend: {
+            display: true
+        }
+    }
+
+    var barChart = new Chart(barChartCanvas, {
+        type: 'bar',
+        data: barChartData,
+        options: barChartOptions
+    })
+</script>
+
+</body>
+</html>
